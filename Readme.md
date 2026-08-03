@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Максим Ананьев](https://up.htmlacademy.ru/react-individual/3/user/360027).
-* Наставник: `Неизвестно`.
+* Наставник: [Алексей Хабиров](https://htmlacademy.ru/profile/alex_khab).
 
 ---
 
