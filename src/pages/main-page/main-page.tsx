@@ -1,4 +1,4 @@
-import PlaceCard from '../../components/place-card/place-card';
+import PlaceCard from '@/components/place-card/place-card';
 
 const PLACES_COUNT = 5;
 
