@@ -12,9 +12,11 @@ const OfferTypeToLabel: Record<OfferType, string> = {
 
 type PlaceCardProps = {
   offer: Offer;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
-function PlaceCard({ offer }: PlaceCardProps): JSX.Element {
+function PlaceCard({ offer, onMouseEnter, onMouseLeave }: PlaceCardProps): JSX.Element {
   const { title, type, price, previewImage, isPremium, isFavorite, rating } = offer;
 
   const ratingWidth = Math.round(rating) * RATING_PERCENT_MULTIPLIER;
@@ -23,7 +25,7 @@ function PlaceCard({ offer }: PlaceCardProps): JSX.Element {
     : 'place-card__bookmark-button button';
 
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
