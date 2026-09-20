@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus, Setting } from '@/const';
+import { AppRoute, AuthorizationStatus } from '@/const';
+import { offers } from '@/mocks/offers';
 import MainPage from '@/pages/main-page/main-page';
 import LoginPage from '@/pages/login-page/login-page';
 import FavoritesPage from '@/pages/favorites-page/favorites-page';
@@ -10,7 +11,7 @@ import PrivateRoute from '@/components/private-route/private-route';
 const router = createBrowserRouter([
   {
     path: AppRoute.Root,
-    element: <MainPage placesCount={Setting.PlacesCount} />,
+    element: <MainPage offers={offers} />,
   },
   {
     path: AppRoute.Login,
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
     path: AppRoute.Favorites,
     element: (
       <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-        <FavoritesPage />
+        <FavoritesPage offers={offers} />
       </PrivateRoute>
     ),
   },

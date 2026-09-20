@@ -1,14 +1,11 @@
-import PlaceCard from '@/components/place-card/place-card';
-
-const PLACES_COUNT = 5;
-
-const placeCardKeys = Array.from({ length: PLACES_COUNT }, () => crypto.randomUUID());
+import { Offers } from '@/types/offer';
+import PlacesList from '@/components/places-list/places-list';
 
 type MainPageProps = {
-  placesCount: number;
+  offers: Offers;
 }
 
-function MainPage({ placesCount }: MainPageProps): JSX.Element {
+function MainPage({ offers }: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -82,7 +79,7 @@ function MainPage({ placesCount }: MainPageProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesCount} places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -98,11 +95,7 @@ function MainPage({ placesCount }: MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {placeCardKeys.map((key) => (
-                  <PlaceCard key={key} />
-                ))}
-              </div>
+              <PlacesList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
