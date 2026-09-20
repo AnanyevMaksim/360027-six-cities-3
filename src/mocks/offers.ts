@@ -1,0 +1,48 @@
+import { Offers } from '@/types/offer';
+
+export const offers: Offers = [
+  {
+    id: '1',
+    title: 'Beautiful & luxurious apartment at great location',
+    type: 'apartment',
+    price: 120,
+    city: 'Amsterdam',
+    previewImage: 'img/apartment-01.jpg',
+    isPremium: true,
+    isFavorite: false,
+    rating: 4,
+  },
+  {
+    id: '2',
+    title: 'Wood and stone place',
+    type: 'room',
+    price: 80,
+    city: 'Amsterdam',
+    previewImage: 'img/room.jpg',
+    isPremium: false,
+    isFavorite: true,
+    rating: 4,
+  },
+  {
+    id: '3',
+    title: 'Canal View Prinsengracht',
+    type: 'apartment',
+    price: 132,
+    city: 'Amsterdam',
+    previewImage: 'img/apartment-02.jpg',
+    isPremium: false,
+    isFavorite: false,
+    rating: 4,
+  },
+  {
+    id: '4',
+    title: 'Nice, cozy, warm big bed apartment',
+    type: 'apartment',
+    price: 180,
+    city: 'Amsterdam',
+    previewImage: 'img/apartment-03.jpg',
+    isPremium: true,
+    isFavorite: false,
+    rating: 5,
+  },
+];
