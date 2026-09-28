@@ -4,7 +4,7 @@ import PlaceCard from '@/components/place-card/place-card';
 
 type PlacesListProps = {
   offers: Offers;
-}
+};
 
 function PlacesList({ offers }: PlacesListProps): JSX.Element {
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
@@ -18,7 +18,10 @@ function PlacesList({ offers }: PlacesListProps): JSX.Element {
   };
 
   return (
-    <div className="cities__places-list places__list tabs__content" data-active-offer-id={activeOfferId ?? ''}>
+    <div
+      className="cities__places-list places__list tabs__content"
+      data-active-offer-id={activeOfferId ?? ''}
+    >
       {offers.map((offer) => (
         <PlaceCard
           key={offer.id}

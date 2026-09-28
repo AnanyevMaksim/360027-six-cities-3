@@ -3,7 +3,7 @@ type LogoType = 'header' | 'footer';
 type LogoProps = {
   type: LogoType;
   isActive?: boolean;
-}
+};
 
 const LogoTypeToSize: Record<LogoType, { width: number; height: number }> = {
   header: {

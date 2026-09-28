@@ -14,10 +14,15 @@ type PlaceCardProps = {
   offer: Offer;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
-}
+};
 
-function PlaceCard({ offer, onMouseEnter, onMouseLeave }: PlaceCardProps): JSX.Element {
-  const { title, type, price, previewImage, isPremium, isFavorite, rating } = offer;
+function PlaceCard({
+  offer,
+  onMouseEnter,
+  onMouseLeave,
+}: PlaceCardProps): JSX.Element {
+  const { title, type, price, previewImage, isPremium, isFavorite, rating } =
+    offer;
 
   const ratingWidth = Math.round(rating) * RATING_PERCENT_MULTIPLIER;
   const bookmarkButtonClass = isFavorite
@@ -25,7 +30,11 @@ function PlaceCard({ offer, onMouseEnter, onMouseLeave }: PlaceCardProps): JSX.E
     : 'place-card__bookmark-button button';
 
   return (
-    <article className="cities__card place-card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <article
+      className="cities__card place-card"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -33,7 +42,13 @@ function PlaceCard({ offer, onMouseEnter, onMouseLeave }: PlaceCardProps): JSX.E
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
+          <img
+            className="place-card__image"
+            src={previewImage}
+            width="260"
+            height="200"
+            alt="Place image"
+          />
         </a>
       </div>
       <div className="place-card__info">
@@ -46,7 +61,9 @@ function PlaceCard({ offer, onMouseEnter, onMouseLeave }: PlaceCardProps): JSX.E
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">{isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
+            <span className="visually-hidden">
+              {isFavorite ? 'In bookmarks' : 'To bookmarks'}
+            </span>
           </button>
         </div>
         <div className="place-card__rating rating">
