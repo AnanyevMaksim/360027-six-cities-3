@@ -1,4 +1,6 @@
 import { Offer, OfferType } from '@/types/offer';
+import CardBadge from '@/components/card-badge/card-badge';
+import BookmarkButton from '@/components/bookmark-button/bookmark-button';
 
 const MAX_RATING = 5;
 const RATING_PERCENT_MULTIPLIER = 100 / MAX_RATING;
@@ -25,9 +27,6 @@ function PlaceCard({
     offer;
 
   const ratingWidth = Math.round(rating) * RATING_PERCENT_MULTIPLIER;
-  const bookmarkButtonClass = isFavorite
-    ? 'place-card__bookmark-button place-card__bookmark-button--active button'
-    : 'place-card__bookmark-button button';
 
   return (
     <article
@@ -35,11 +34,7 @@ function PlaceCard({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {isPremium && (
-        <div className="place-card__mark">
-          <span>Premium</span>
-        </div>
-      )}
+      {isPremium && <CardBadge className="place-card__mark" />}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img
@@ -57,14 +52,7 @@ function PlaceCard({
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button className={bookmarkButtonClass} type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">
-              {isFavorite ? 'In bookmarks' : 'To bookmarks'}
-            </span>
-          </button>
+          <BookmarkButton isActive={isFavorite} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
