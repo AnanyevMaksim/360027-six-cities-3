@@ -1,7 +1,6 @@
 import { Offers } from '@/types/offer';
 import PlacesList from '@/components/places-list/places-list';
-import Logo from '@/components/logo/logo';
-import Nav from '@/components/nav/nav';
+import Header from '@/components/header/header';
 
 type MainPageProps = {
   offers: Offers;
@@ -10,16 +9,7 @@ type MainPageProps = {
 function MainPage({ offers }: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo type="header" isActive />
-            </div>
-            <Nav />
-          </div>
-        </div>
-      </header>
+      <Header isActiveLogo />
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>

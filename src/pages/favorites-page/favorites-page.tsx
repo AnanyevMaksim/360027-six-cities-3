@@ -1,7 +1,7 @@
 import { Offers } from '@/types/offer';
 import PlaceCard from '@/components/place-card/place-card';
 import Logo from '@/components/logo/logo';
-import Nav from '@/components/nav/nav';
+import Header from '@/components/header/header';
 
 type FavoritesPageProps = {
   offers: Offers;
@@ -10,16 +10,7 @@ type FavoritesPageProps = {
 function FavoritesPage({ offers }: FavoritesPageProps): JSX.Element {
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo type="header" />
-            </div>
-            <Nav />
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">

@@ -1,19 +1,9 @@
-import Logo from '@/components/logo/logo';
-import Nav from '@/components/nav/nav';
+import Header from '@/components/header/header';
 
 function OfferPage(): JSX.Element {
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo type="header" />
-            </div>
-            <Nav />
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="page__main page__main--offer">
         <section className="offer">
