@@ -26,6 +26,7 @@ function PlacesList({ offers }: PlacesListProps): JSX.Element {
         <PlaceCard
           key={offer.id}
           offer={offer}
+          type="cities"
           onMouseEnter={() => handleCardMouseEnter(offer.id)}
           onMouseLeave={handleCardMouseLeave}
         />
