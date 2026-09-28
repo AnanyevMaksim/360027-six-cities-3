@@ -3,6 +3,7 @@ import PlacesList from '@/components/places-list/places-list';
 import Header from '@/components/header/header';
 import CitiesList from '@/components/cities-list/cities-list';
 import Sorting from '@/components/sorting/sorting';
+import Map from '@/components/map/map';
 
 type MainPageProps = {
   offers: Offers;
@@ -26,7 +27,7 @@ function MainPage({ offers }: MainPageProps): JSX.Element {
               <PlacesList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map className="cities__map" />
             </div>
           </div>
         </div>
