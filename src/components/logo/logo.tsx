@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 type LogoType = 'header' | 'footer';
 
 type LogoProps = {
@@ -18,12 +20,15 @@ const LogoTypeToSize: Record<LogoType, { width: number; height: number }> = {
 
 function Logo({ type, isActive = false }: LogoProps): JSX.Element {
   const { width, height } = LogoTypeToSize[type];
-  const linkClassName = isActive
-    ? `${type}__logo-link ${type}__logo-link--active`
-    : `${type}__logo-link`;
 
   return (
-    <a className={linkClassName} href={isActive ? undefined : 'main.html'}>
+    <a
+      className={clsx(
+        `${type}__logo-link`,
+        isActive && `${type}__logo-link--active`,
+      )}
+      href={isActive ? undefined : 'main.html'}
+    >
       <img
         className={`${type}__logo`}
         src="img/logo.svg"
