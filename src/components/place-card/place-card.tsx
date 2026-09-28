@@ -2,9 +2,7 @@ import clsx from 'clsx';
 import { Offer, OfferType } from '@/types/offer';
 import CardBadge from '@/components/card-badge/card-badge';
 import BookmarkButton from '@/components/bookmark-button/bookmark-button';
-
-const MAX_RATING = 5;
-const RATING_PERCENT_MULTIPLIER = 100 / MAX_RATING;
+import { getRatingWidth } from '@/utils';
 
 const OfferTypeToLabel: Record<OfferType, string> = {
   apartment: 'Apartment',
@@ -63,7 +61,7 @@ function PlaceCard({
     rating,
   } = offer;
 
-  const ratingWidth = Math.round(rating) * RATING_PERCENT_MULTIPLIER;
+  const ratingWidth = getRatingWidth(rating);
   const settings = PlaceCardTypeToSettings[type];
 
   return (
