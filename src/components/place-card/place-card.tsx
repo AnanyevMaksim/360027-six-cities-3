@@ -1,4 +1,6 @@
 import clsx from 'clsx';
+import { generatePath, Link } from 'react-router-dom';
+import { AppRoute } from '@/const';
 import { Offer, OfferType } from '@/types/offer';
 import CardBadge from '@/components/card-badge/card-badge';
 import BookmarkButton from '@/components/bookmark-button/bookmark-button';
@@ -52,6 +54,7 @@ function PlaceCard({
   onMouseLeave,
 }: PlaceCardProps): JSX.Element {
   const {
+    id,
     title,
     type: offerType,
     price,
@@ -63,6 +66,7 @@ function PlaceCard({
 
   const ratingWidth = getRatingWidth(rating);
   const settings = PlaceCardTypeToSettings[type];
+  const offerLink = generatePath(AppRoute.Offer, { id });
 
   return (
     <article
@@ -77,7 +81,7 @@ function PlaceCard({
           'place-card__image-wrapper',
         )}
       >
-        <a href="#">
+        <Link to={offerLink}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -85,7 +89,7 @@ function PlaceCard({
             height={settings.imageHeight}
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
       <div className={clsx(settings.infoClassName, 'place-card__info')}>
         <div className="place-card__price-wrapper">
@@ -102,7 +106,7 @@ function PlaceCard({
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={offerLink}>{title}</Link>
         </h2>
         <p className="place-card__type">{OfferTypeToLabel[offerType]}</p>
       </div>
