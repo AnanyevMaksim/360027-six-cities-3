@@ -27,7 +27,7 @@ const router = createBrowserRouter([
   },
   {
     path: AppRoute.Offer,
-    element: <OfferPage />,
+    element: <OfferPage offers={offers} />,
   },
   {
     path: '*',
