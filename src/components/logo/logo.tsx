@@ -1,4 +1,6 @@
 import clsx from 'clsx';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '@/const';
 
 type LogoType = 'header' | 'footer';
 
@@ -22,12 +24,12 @@ function Logo({ type, isActive = false }: LogoProps): JSX.Element {
   const { width, height } = LogoTypeToSize[type];
 
   return (
-    <a
+    <Link
       className={clsx(
         `${type}__logo-link`,
         isActive && `${type}__logo-link--active`,
       )}
-      href={isActive ? undefined : 'main.html'}
+      to={AppRoute.Root}
     >
       <img
         className={`${type}__logo`}
@@ -36,7 +38,7 @@ function Logo({ type, isActive = false }: LogoProps): JSX.Element {
         width={width}
         height={height}
       />
-    </a>
+    </Link>
   );
 }
 
