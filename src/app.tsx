@@ -1,12 +1,18 @@
+import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '@/const';
 import { offers } from '@/mocks/offers';
 import MainPage from '@/pages/main-page/main-page';
-import LoginPage from '@/pages/login-page/login-page';
-import FavoritesPage from '@/pages/favorites-page/favorites-page';
-import OfferPage from '@/pages/offer-page/offer-page';
-import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import PrivateRoute from '@/components/private-route/private-route';
+
+const LoginPage = lazy(() => import('@/pages/login-page/login-page'));
+const FavoritesPage = lazy(
+  () => import('@/pages/favorites-page/favorites-page'),
+);
+const OfferPage = lazy(() => import('@/pages/offer-page/offer-page'));
+const NotFoundPage = lazy(
+  () => import('@/pages/not-found-page/not-found-page'),
+);
 
 const router = createBrowserRouter([
   {
@@ -36,7 +42,11 @@ const router = createBrowserRouter([
 ]);
 
 function App(): JSX.Element {
-  return <RouterProvider router={router} />;
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 }
 
 export default App;
