@@ -21,7 +21,7 @@ function FavoritesPage({ offers }: FavoritesPageProps): JSX.Element {
                 <div className="favorites__locations locations locations--current">
                   <div className="locations__item">
                     <a className="locations__item-link" href="#">
-                      <span>{offers[0]?.city}</span>
+                      <span>{offers[0]?.city.name}</span>
                     </a>
                   </div>
                 </div>
