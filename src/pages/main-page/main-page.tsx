@@ -10,6 +10,8 @@ type MainPageProps = {
 };
 
 function MainPage({ offers }: MainPageProps): JSX.Element {
+  const city = offers[0]?.city;
+
   return (
     <div className="page page--gray page--main">
       <Header isActiveLogo />
@@ -27,7 +29,9 @@ function MainPage({ offers }: MainPageProps): JSX.Element {
               <PlacesList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <Map className="cities__map" />
+              {city && (
+                <Map className="cities__map" city={city} offers={offers} />
+              )}
             </div>
           </div>
         </div>
