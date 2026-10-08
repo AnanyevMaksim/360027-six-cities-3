@@ -4,6 +4,7 @@ import { AppRoute, AuthorizationStatus } from '@/const';
 import { offers } from '@/mocks/offers';
 import MainPage from '@/pages/main-page/main-page';
 import PrivateRoute from '@/components/private-route/private-route';
+import Loader from '@/components/loader/loader';
 
 const LoginPage = lazy(() => import('@/pages/login-page/login-page'));
 const FavoritesPage = lazy(
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
     element: <OfferPage offers={offers} />,
   },
   {
+    path: AppRoute.NotFound,
+    element: <NotFoundPage />,
+  },
+  {
     path: '*',
     element: <NotFoundPage />,
   },
@@ -43,7 +48,7 @@ const router = createBrowserRouter([
 
 function App(): JSX.Element {
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<Loader />}>
       <RouterProvider router={router} />
     </Suspense>
   );
