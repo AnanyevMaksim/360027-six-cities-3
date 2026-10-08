@@ -1,9 +1,9 @@
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
+import { AppRoute } from '@/const';
 import { Offers } from '@/types/offer';
 import Header from '@/components/header/header';
 import CardBadge from '@/components/card-badge/card-badge';
 import ReviewForm from '@/components/review-form/review-form';
-import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import { getRatingWidth } from '@/utils';
 
 type OfferPageProps = {
@@ -15,7 +15,7 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
   const offer = offers.find((item) => item.id === id);
 
   if (!offer) {
-    return <NotFoundPage />;
+    return <Navigate to={AppRoute.NotFound} replace />;
   }
 
   const { title, isPremium, price, rating } = offer;
