@@ -6,7 +6,10 @@ import Header from '@/components/header/header';
 import CardBadge from '@/components/card-badge/card-badge';
 import ReviewsList from '@/components/reviews-list/reviews-list';
 import ReviewForm from '@/components/review-form/review-form';
+import Map from '@/components/map/map';
 import { getRatingWidth } from '@/utils';
+
+const MAX_NEAR_OFFERS_COUNT = 3;
 
 type OfferPageProps = {
   offers: Offers;
@@ -21,7 +24,10 @@ function OfferPage({ offers, reviews }: OfferPageProps): JSX.Element {
     return <Navigate to={AppRoute.NotFound} replace />;
   }
 
-  const { title, isPremium, price, rating } = offer;
+  const { title, isPremium, price, rating, city } = offer;
+  const nearOffers = offers
+    .filter((item) => item.id !== offer.id)
+    .slice(0, MAX_NEAR_OFFERS_COUNT);
 
   return (
     <div className="page">
@@ -160,7 +166,12 @@ function OfferPage({ offers, reviews }: OfferPageProps): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="offer__map map"></section>
+          <Map
+            className="offer__map"
+            city={city}
+            offers={[offer, ...nearOffers]}
+            activeOfferId={offer.id}
+          />
         </section>
         <div className="container">
           <section className="near-places places">
