@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import clsx from 'clsx';
+import { CITIES } from '@/const';
 import useAppSelector from '@/hooks/use-app-selector';
-import { selectCityOffers } from '@/store/selectors';
+import { selectCity, selectCityOffers } from '@/store/selectors';
 import PlacesList from '@/components/places-list/places-list';
 import Header from '@/components/header/header';
 import CitiesList from '@/components/cities-list/cities-list';
@@ -10,6 +11,7 @@ import Map from '@/components/map/map';
 import MainEmpty from '@/components/main-empty/main-empty';
 
 function MainPage(): JSX.Element {
+  const city = useAppSelector(selectCity);
   const offers = useAppSelector(selectCityOffers);
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
   const isEmpty = offers.length === 0;
@@ -23,7 +25,7 @@ function MainPage(): JSX.Element {
           'page__main--index-empty': isEmpty,
         })}
       >
-        <CitiesList />
+        <CitiesList cities={CITIES} activeCity={city} />
         <div className="cities">
           <div
             className={clsx('cities__places-container container', {
