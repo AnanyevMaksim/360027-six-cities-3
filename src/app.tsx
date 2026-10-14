@@ -19,7 +19,7 @@ const NotFoundPage = lazy(
 const router = createBrowserRouter([
   {
     path: AppRoute.Root,
-    element: <MainPage offers={offers} />,
+    element: <MainPage />,
   },
   {
     path: AppRoute.Login,

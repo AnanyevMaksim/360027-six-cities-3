@@ -27,7 +27,7 @@ function OfferPage({ offers, reviews }: OfferPageProps): JSX.Element {
 
   const { title, isPremium, price, rating, city } = offer;
   const nearOffers = offers
-    .filter((item) => item.id !== offer.id)
+    .filter((item) => item.id !== offer.id && item.city.name === city.name)
     .slice(0, MAX_NEAR_OFFERS_COUNT);
 
   return (

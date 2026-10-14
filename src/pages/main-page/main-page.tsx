@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import clsx from 'clsx';
-import { Offers } from '@/types/offer';
+import useAppSelector from '@/hooks/use-app-selector';
+import { selectCityOffers } from '@/store/selectors';
 import PlacesList from '@/components/places-list/places-list';
 import Header from '@/components/header/header';
 import CitiesList from '@/components/cities-list/cities-list';
@@ -8,11 +9,8 @@ import Sorting from '@/components/sorting/sorting';
 import Map from '@/components/map/map';
 import MainEmpty from '@/components/main-empty/main-empty';
 
-type MainPageProps = {
-  offers: Offers;
-};
-
-function MainPage({ offers }: MainPageProps): JSX.Element {
+function MainPage(): JSX.Element {
+  const offers = useAppSelector(selectCityOffers);
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
   const isEmpty = offers.length === 0;
 

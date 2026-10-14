@@ -1,5 +1,14 @@
 import { City, Offers } from '@/types/offer';
 
+const PARIS: City = {
+  name: 'Paris',
+  location: {
+    latitude: 48.85661,
+    longitude: 2.351499,
+    zoom: 12,
+  },
+};
+
 const AMSTERDAM: City = {
   name: 'Amsterdam',
   location: {
@@ -73,5 +82,53 @@ export const offers: Offers = [
     isPremium: true,
     isFavorite: false,
     rating: 5,
+  },
+  {
+    id: '5',
+    title: 'Cozy studio near the Louvre',
+    type: 'apartment',
+    price: 150,
+    city: PARIS,
+    location: {
+      latitude: 48.8606,
+      longitude: 2.3376,
+      zoom: 16,
+    },
+    previewImage: 'img/apartment-02.jpg',
+    isPremium: true,
+    isFavorite: false,
+    rating: 4.6,
+  },
+  {
+    id: '6',
+    title: 'Quiet room in Le Marais',
+    type: 'room',
+    price: 90,
+    city: PARIS,
+    location: {
+      latitude: 48.8575,
+      longitude: 2.3622,
+      zoom: 16,
+    },
+    previewImage: 'img/room.jpg',
+    isPremium: false,
+    isFavorite: true,
+    rating: 3.8,
+  },
+  {
+    id: '7',
+    title: 'Hotel with a view of Montmartre',
+    type: 'hotel',
+    price: 210,
+    city: PARIS,
+    location: {
+      latitude: 48.8867,
+      longitude: 2.3431,
+      zoom: 16,
+    },
+    previewImage: 'img/apartment-03.jpg',
+    isPremium: false,
+    isFavorite: false,
+    rating: 4.9,
   },
 ];
