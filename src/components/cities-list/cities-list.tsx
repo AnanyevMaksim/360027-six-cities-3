@@ -1,12 +1,26 @@
+import { MouseEvent } from 'react';
 import clsx from 'clsx';
 import { CityName } from '@/types/offer';
 
 type CitiesListProps = {
   cities: readonly CityName[];
   activeCity: CityName;
+  onCityChange: (city: CityName) => void;
 };
 
-function CitiesList({ cities, activeCity }: CitiesListProps): JSX.Element {
+function CitiesList({
+  cities,
+  activeCity,
+  onCityChange,
+}: CitiesListProps): JSX.Element {
+  const handleCityClick = (
+    evt: MouseEvent<HTMLAnchorElement>,
+    city: CityName,
+  ) => {
+    evt.preventDefault();
+    onCityChange(city);
+  };
+
   return (
     <>
       <h1 className="visually-hidden">Cities</h1>
@@ -20,6 +34,7 @@ function CitiesList({ cities, activeCity }: CitiesListProps): JSX.Element {
                     'tabs__item--active': city === activeCity,
                   })}
                   href="#"
+                  onClick={(evt) => handleCityClick(evt, city)}
                 >
                   <span>{city}</span>
                 </a>
