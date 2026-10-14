@@ -1,3 +1,5 @@
+import { CITIES } from '@/const';
+
 export type OfferType = 'apartment' | 'room' | 'house' | 'hotel';
 
 export type Location = {
@@ -25,3 +27,5 @@ export type Offer = {
 };
 
 export type Offers = Offer[];
+
+export type CityName = (typeof CITIES)[number];

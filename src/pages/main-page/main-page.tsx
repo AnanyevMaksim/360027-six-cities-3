@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import clsx from 'clsx';
-import { Offers } from '@/types/offer';
+import { CITIES } from '@/const';
+import { CityName } from '@/types/offer';
+import useAppDispatch from '@/hooks/use-app-dispatch';
+import useAppSelector from '@/hooks/use-app-selector';
+import { selectCity, selectCityOffers } from '@/store/selectors';
+import { changeCity } from '@/store/action';
 import PlacesList from '@/components/places-list/places-list';
 import Header from '@/components/header/header';
 import CitiesList from '@/components/cities-list/cities-list';
@@ -8,13 +13,16 @@ import Sorting from '@/components/sorting/sorting';
 import Map from '@/components/map/map';
 import MainEmpty from '@/components/main-empty/main-empty';
 
-type MainPageProps = {
-  offers: Offers;
-};
-
-function MainPage({ offers }: MainPageProps): JSX.Element {
+function MainPage(): JSX.Element {
+  const city = useAppSelector(selectCity);
+  const offers = useAppSelector(selectCityOffers);
+  const dispatch = useAppDispatch();
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
   const isEmpty = offers.length === 0;
+
+  const handleCityChange = (newCity: CityName) => {
+    dispatch(changeCity(newCity));
+  };
 
   return (
     <div className="page page--gray page--main">
@@ -25,7 +33,11 @@ function MainPage({ offers }: MainPageProps): JSX.Element {
           'page__main--index-empty': isEmpty,
         })}
       >
-        <CitiesList />
+        <CitiesList
+          cities={CITIES}
+          activeCity={city}
+          onCityChange={handleCityChange}
+        />
         <div className="cities">
           <div
             className={clsx('cities__places-container container', {
@@ -33,12 +45,12 @@ function MainPage({ offers }: MainPageProps): JSX.Element {
             })}
           >
             {isEmpty ? (
-              <MainEmpty />
+              <MainEmpty cityName={city} />
             ) : (
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">
-                  {offers.length} places to stay in Amsterdam
+                  {offers.length} places to stay in {city}
                 </b>
                 <Sorting />
                 <PlacesList

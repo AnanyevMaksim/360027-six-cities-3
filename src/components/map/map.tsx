@@ -36,6 +36,18 @@ function Map({
 
   useEffect(() => {
     if (map) {
+      map.setView(
+        {
+          lat: city.location.latitude,
+          lng: city.location.longitude,
+        },
+        city.location.zoom,
+      );
+    }
+  }, [map, city]);
+
+  useEffect(() => {
+    if (map) {
       const markerLayer = layerGroup().addTo(map);
 
       offers.forEach((offer) => {
