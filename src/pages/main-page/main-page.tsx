@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import clsx from 'clsx';
-import { CITIES } from '@/const';
 import { CityName } from '@/types/offer';
 import useAppDispatch from '@/hooks/use-app-dispatch';
 import useAppSelector from '@/hooks/use-app-selector';
@@ -33,11 +32,7 @@ function MainPage(): JSX.Element {
           'page__main--index-empty': isEmpty,
         })}
       >
-        <CitiesList
-          cities={CITIES}
-          activeCity={city}
-          onCityChange={handleCityChange}
-        />
+        <CitiesList activeCity={city} onCityChange={handleCityChange} />
         <div className="cities">
           <div
             className={clsx('cities__places-container container', {

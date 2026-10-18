@@ -21,4 +21,4 @@ export const CITIES = [
   'Dusseldorf',
 ] as const;
 
-export const DEFAULT_CITY = 'Paris';
+export const DEFAULT_CITY = CITIES[0];
