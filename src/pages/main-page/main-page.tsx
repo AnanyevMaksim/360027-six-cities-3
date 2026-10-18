@@ -9,6 +9,7 @@ import PlacesList from '@/components/places-list/places-list';
 import Header from '@/components/header/header';
 import CitiesList from '@/components/cities-list/cities-list';
 import Sorting from '@/components/sorting/sorting';
+import { SortType } from '@/components/sorting/const';
 import Map from '@/components/map/map';
 import MainEmpty from '@/components/main-empty/main-empty';
 
@@ -17,6 +18,7 @@ function MainPage(): JSX.Element {
   const offers = useAppSelector(selectCityOffers);
   const dispatch = useAppDispatch();
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
+  const [sortType, setSortType] = useState<SortType>(SortType.Popular);
   const isEmpty = offers.length === 0;
 
   const handleCityChange = (newCity: CityName) => {
@@ -47,7 +49,10 @@ function MainPage(): JSX.Element {
                 <b className="places__found">
                   {offers.length} places to stay in {city}
                 </b>
-                <Sorting />
+                <Sorting
+                  activeSortType={sortType}
+                  onSortTypeChange={setSortType}
+                />
                 <PlacesList
                   offers={offers}
                   type="cities"
