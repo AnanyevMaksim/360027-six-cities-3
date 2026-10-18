@@ -10,6 +10,7 @@ import Header from '@/components/header/header';
 import CitiesList from '@/components/cities-list/cities-list';
 import Sorting from '@/components/sorting/sorting';
 import { SortType } from '@/components/sorting/const';
+import { sortOffers } from '@/components/sorting/utils';
 import Map from '@/components/map/map';
 import MainEmpty from '@/components/main-empty/main-empty';
 
@@ -20,6 +21,7 @@ function MainPage(): JSX.Element {
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
   const [sortType, setSortType] = useState<SortType>(SortType.Popular);
   const isEmpty = offers.length === 0;
+  const sortedOffers = sortOffers(offers, sortType);
 
   const handleCityChange = (newCity: CityName) => {
     dispatch(changeCity(newCity));
@@ -54,7 +56,7 @@ function MainPage(): JSX.Element {
                   onSortTypeChange={setSortType}
                 />
                 <PlacesList
-                  offers={offers}
+                  offers={sortedOffers}
                   type="cities"
                   onActiveOfferChange={setActiveOfferId}
                 />
