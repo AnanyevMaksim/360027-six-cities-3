@@ -3,25 +3,26 @@ import clsx from 'clsx';
 import { CityName } from '@/types/offer';
 import useAppDispatch from '@/hooks/use-app-dispatch';
 import useAppSelector from '@/hooks/use-app-selector';
-import { selectCity, selectCityOffers } from '@/store/selectors';
+import {
+  selectCity,
+  selectCityOffers,
+  selectSortedCityOffers,
+} from '@/store/selectors';
 import { changeCity } from '@/store/action';
 import PlacesList from '@/components/places-list/places-list';
 import Header from '@/components/header/header';
 import CitiesList from '@/components/cities-list/cities-list';
 import Sorting from '@/components/sorting/sorting';
-import { SortType } from '@/components/sorting/const';
-import { sortOffers } from '@/components/sorting/utils';
 import Map from '@/components/map/map';
 import MainEmpty from '@/components/main-empty/main-empty';
 
 function MainPage(): JSX.Element {
   const city = useAppSelector(selectCity);
   const offers = useAppSelector(selectCityOffers);
+  const sortedOffers = useAppSelector(selectSortedCityOffers);
   const dispatch = useAppDispatch();
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
-  const [sortType, setSortType] = useState<SortType>(SortType.Popular);
   const isEmpty = offers.length === 0;
-  const sortedOffers = sortOffers(offers, sortType);
 
   const handleCityChange = (newCity: CityName) => {
     dispatch(changeCity(newCity));
@@ -51,10 +52,7 @@ function MainPage(): JSX.Element {
                 <b className="places__found">
                   {offers.length} places to stay in {city}
                 </b>
-                <Sorting
-                  activeSortType={sortType}
-                  onSortTypeChange={setSortType}
-                />
+                <Sorting />
                 <PlacesList
                   offers={sortedOffers}
                   type="cities"

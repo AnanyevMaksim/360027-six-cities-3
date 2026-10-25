@@ -1,29 +1,35 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import clsx from 'clsx';
+import useAppDispatch from '@/hooks/use-app-dispatch';
+import useAppSelector from '@/hooks/use-app-selector';
+import useOutsideClick from '@/hooks/use-outside-click';
+import { selectSortType } from '@/store/selectors';
+import { changeSort } from '@/store/action';
 import { SortType } from './const';
 
-type SortingProps = {
-  activeSortType: SortType;
-  onSortTypeChange: (sortType: SortType) => void;
-};
-
-function Sorting({
-  activeSortType,
-  onSortTypeChange,
-}: SortingProps): JSX.Element {
+function Sorting(): JSX.Element {
+  const activeSortType = useAppSelector(selectSortType);
+  const dispatch = useAppDispatch();
   const [isOpened, setIsOpened] = useState(false);
+  const sortingRef = useRef<HTMLFormElement | null>(null);
 
   const handleSortTypeClick = () => {
     setIsOpened((prevIsOpened) => !prevIsOpened);
   };
 
   const handleOptionClick = (sortType: SortType) => {
-    onSortTypeChange(sortType);
+    dispatch(changeSort(sortType));
     setIsOpened(false);
   };
 
+  const handleOutsideClick = () => {
+    setIsOpened(false);
+  };
+
+  useOutsideClick(sortingRef, handleOutsideClick);
+
   return (
-    <form className="places__sorting" action="#" method="get">
+    <form className="places__sorting" action="#" method="get" ref={sortingRef}>
       <span className="places__sorting-caption">Sort by</span>{' '}
       <span
         className="places__sorting-type"
