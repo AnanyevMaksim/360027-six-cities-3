@@ -22,3 +22,10 @@ export const CITIES = [
 ] as const;
 
 export const DEFAULT_CITY = CITIES[0];
+
+export enum SortType {
+  Popular = 'Popular',
+  PriceAsc = 'PriceAsc',
+  PriceDesc = 'PriceDesc',
+  TopRated = 'TopRated',
+}

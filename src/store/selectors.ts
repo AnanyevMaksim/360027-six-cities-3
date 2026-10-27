@@ -1,6 +1,26 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { SortType } from '@/const';
+import { Offers } from '@/types/offer';
 import { State } from '@/types/state';
-import { sortOffers } from '@/components/sorting/utils';
+
+function sortOffers(offers: Offers, sortType: SortType): Offers {
+  switch (sortType) {
+    case SortType.Popular:
+      return offers;
+    case SortType.PriceAsc:
+      return [...offers].sort(
+        (firstOffer, secondOffer) => firstOffer.price - secondOffer.price,
+      );
+    case SortType.PriceDesc:
+      return [...offers].sort(
+        (firstOffer, secondOffer) => secondOffer.price - firstOffer.price,
+      );
+    case SortType.TopRated:
+      return [...offers].sort(
+        (firstOffer, secondOffer) => secondOffer.rating - firstOffer.rating,
+      );
+  }
+}
 
 export const selectCity = (state: State) => state.city;
 

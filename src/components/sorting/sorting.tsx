@@ -1,11 +1,12 @@
 import { useRef, useState } from 'react';
 import clsx from 'clsx';
+import { SortType } from '@/const';
 import useAppDispatch from '@/hooks/use-app-dispatch';
 import useAppSelector from '@/hooks/use-app-selector';
 import useOutsideClick from '@/hooks/use-outside-click';
 import { selectSortType } from '@/store/selectors';
 import { changeSort } from '@/store/action';
-import { SortType } from './const';
+import { SortTypeDictionary } from './const';
 
 function Sorting(): JSX.Element {
   const activeSortType = useAppSelector(selectSortType);
@@ -36,7 +37,7 @@ function Sorting(): JSX.Element {
         tabIndex={0}
         onClick={handleSortTypeClick}
       >
-        {activeSortType}
+        {SortTypeDictionary[activeSortType]}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
@@ -55,7 +56,7 @@ function Sorting(): JSX.Element {
             tabIndex={0}
             onClick={() => handleOptionClick(sortType)}
           >
-            {sortType}
+            {SortTypeDictionary[sortType]}
           </li>
         ))}
       </ul>

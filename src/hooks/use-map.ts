@@ -1,7 +1,11 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { Map, TileLayer } from 'leaflet';
 import { City } from '@/types/offer';
-import { TILE_LAYER_ATTRIBUTION, TILE_LAYER_URL } from '@/components/map/const';
+
+const TILE_LAYER_URL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+
+const TILE_LAYER_ATTRIBUTION =
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
 function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,

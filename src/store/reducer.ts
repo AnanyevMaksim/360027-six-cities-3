@@ -1,8 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { DEFAULT_CITY } from '@/const';
+import { DEFAULT_CITY, SortType } from '@/const';
 import { CityName, Offers } from '@/types/offer';
 import { offers } from '@/mocks/offers';
-import { SortType } from '@/components/sorting/const';
 import { changeCity, changeSort } from './action';
 
 type InitialState = {
