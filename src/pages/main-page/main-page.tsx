@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import clsx from 'clsx';
-import { CITIES } from '@/const';
 import { CityName } from '@/types/offer';
 import useAppDispatch from '@/hooks/use-app-dispatch';
 import useAppSelector from '@/hooks/use-app-selector';
-import { selectCity, selectCityOffers } from '@/store/selectors';
+import {
+  selectCity,
+  selectCityOffers,
+  selectSortedCityOffers,
+} from '@/store/selectors';
 import { changeCity } from '@/store/action';
 import PlacesList from '@/components/places-list/places-list';
 import Header from '@/components/header/header';
@@ -16,6 +19,7 @@ import MainEmpty from '@/components/main-empty/main-empty';
 function MainPage(): JSX.Element {
   const city = useAppSelector(selectCity);
   const offers = useAppSelector(selectCityOffers);
+  const sortedOffers = useAppSelector(selectSortedCityOffers);
   const dispatch = useAppDispatch();
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
   const isEmpty = offers.length === 0;
@@ -33,11 +37,7 @@ function MainPage(): JSX.Element {
           'page__main--index-empty': isEmpty,
         })}
       >
-        <CitiesList
-          cities={CITIES}
-          activeCity={city}
-          onCityChange={handleCityChange}
-        />
+        <CitiesList activeCity={city} onCityChange={handleCityChange} />
         <div className="cities">
           <div
             className={clsx('cities__places-container container', {
@@ -54,7 +54,7 @@ function MainPage(): JSX.Element {
                 </b>
                 <Sorting />
                 <PlacesList
-                  offers={offers}
+                  offers={sortedOffers}
                   type="cities"
                   onActiveOfferChange={setActiveOfferId}
                 />
