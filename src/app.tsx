@@ -1,6 +1,8 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '@/const';
+import useAppSelector from '@/hooks/use-app-selector';
+import { selectIsOffersLoading } from '@/store/selectors';
 import MainPage from '@/pages/main-page/main-page';
 import PrivateRoute from '@/components/private-route/private-route';
 import Loader from '@/components/loader/loader';
@@ -46,6 +48,12 @@ const router = createBrowserRouter([
 ]);
 
 function App(): JSX.Element {
+  const isOffersLoading = useAppSelector(selectIsOffersLoading);
+
+  if (isOffersLoading) {
+    return <Loader />;
+  }
+
   return (
     <Suspense fallback={<Loader />}>
       <RouterProvider router={router} />
