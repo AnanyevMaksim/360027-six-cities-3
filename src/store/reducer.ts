@@ -1,14 +1,20 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { DEFAULT_CITY, RequestStatus, SortType } from '@/const';
+import {
+  AuthorizationStatus,
+  DEFAULT_CITY,
+  RequestStatus,
+  SortType,
+} from '@/const';
 import { CityName, Offers } from '@/types/offer';
 import { changeCity, changeSort } from './action';
-import { fetchOffersAction } from './api-actions';
+import { checkAuthAction, fetchOffersAction } from './api-actions';
 
 type InitialState = {
   city: CityName;
   offers: Offers;
   sortType: SortType;
   offersStatus: RequestStatus;
+  authorizationStatus: AuthorizationStatus;
 };
 
 const initialState: InitialState = {
@@ -16,6 +22,7 @@ const initialState: InitialState = {
   offers: [],
   sortType: SortType.Popular,
   offersStatus: RequestStatus.Idle,
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -35,5 +42,11 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchOffersAction.rejected, (state) => {
       state.offersStatus = RequestStatus.Error;
+    })
+    .addCase(checkAuthAction.fulfilled, (state) => {
+      state.authorizationStatus = AuthorizationStatus.Auth;
+    })
+    .addCase(checkAuthAction.rejected, (state) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
     });
 });

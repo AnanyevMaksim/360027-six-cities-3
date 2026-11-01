@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from '@/store';
-import { fetchOffersAction } from '@/store/api-actions';
+import { checkAuthAction, fetchOffersAction } from '@/store/api-actions';
 import App from './app';
 
 store.dispatch(fetchOffersAction());
+store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

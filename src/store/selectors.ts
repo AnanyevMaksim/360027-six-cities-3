@@ -28,6 +28,9 @@ export const selectOffers = (state: State) => state.offers;
 
 export const selectSortType = (state: State) => state.sortType;
 
+export const selectAuthorizationStatus = (state: State) =>
+  state.authorizationStatus;
+
 export const selectOffersRequestStatus = (state: State) => state.offersStatus;
 
 export const selectFavoriteOffers = createSelector([selectOffers], (offers) =>

@@ -11,3 +11,11 @@ export const fetchOffersAction = createAsyncThunk<
   const { data } = await api.get<Offers>(APIRoute.Offers);
   return data;
 });
+
+export const checkAuthAction = createAsyncThunk<
+  void,
+  undefined,
+  { extra: AxiosInstance }
+>('user/checkAuth', async (_arg, { extra: api }) => {
+  await api.get(APIRoute.Login);
+});
