@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { DEFAULT_CITY, SortType } from '@/const';
+import { DEFAULT_CITY, RequestStatus, SortType } from '@/const';
 import { CityName, Offers } from '@/types/offer';
 import { changeCity, changeSort } from './action';
 import { fetchOffersAction } from './api-actions';
@@ -8,14 +8,14 @@ type InitialState = {
   city: CityName;
   offers: Offers;
   sortType: SortType;
-  isOffersLoading: boolean;
+  offersStatus: RequestStatus;
 };
 
 const initialState: InitialState = {
   city: DEFAULT_CITY,
   offers: [],
   sortType: SortType.Popular,
-  isOffersLoading: false,
+  offersStatus: RequestStatus.Idle,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -27,13 +27,13 @@ export const reducer = createReducer(initialState, (builder) => {
       state.sortType = action.payload;
     })
     .addCase(fetchOffersAction.pending, (state) => {
-      state.isOffersLoading = true;
+      state.offersStatus = RequestStatus.Loading;
     })
     .addCase(fetchOffersAction.fulfilled, (state, action) => {
       state.offers = action.payload;
-      state.isOffersLoading = false;
+      state.offersStatus = RequestStatus.Success;
     })
     .addCase(fetchOffersAction.rejected, (state) => {
-      state.isOffersLoading = false;
+      state.offersStatus = RequestStatus.Error;
     });
 });

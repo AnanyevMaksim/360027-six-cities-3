@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { SortType } from '@/const';
+import { RequestStatus, SortType } from '@/const';
 import { Offers } from '@/types/offer';
 import { State } from '@/types/state';
 
@@ -28,7 +28,7 @@ export const selectOffers = (state: State) => state.offers;
 
 export const selectSortType = (state: State) => state.sortType;
 
-export const selectIsOffersLoading = (state: State) => state.isOffersLoading;
+export const selectOffersRequestStatus = (state: State) => state.offersStatus;
 
 export const selectFavoriteOffers = createSelector([selectOffers], (offers) =>
   offers.filter((offer) => offer.isFavorite),
@@ -42,4 +42,14 @@ export const selectCityOffers = createSelector(
 export const selectSortedCityOffers = createSelector(
   [selectCityOffers, selectSortType],
   (offers, sortType) => sortOffers(offers, sortType),
+);
+
+export const selectOffersStatus = createSelector(
+  [selectOffersRequestStatus],
+  (status) => ({
+    isLoading:
+      status === RequestStatus.Idle || status === RequestStatus.Loading,
+    isSuccess: status === RequestStatus.Success,
+    isError: status === RequestStatus.Error,
+  }),
 );

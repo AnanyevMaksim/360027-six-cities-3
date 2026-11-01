@@ -33,3 +33,10 @@ export enum SortType {
   PriceDesc = 'PriceDesc',
   TopRated = 'TopRated',
 }
+
+export enum RequestStatus {
+  Idle = 'Idle',
+  Loading = 'Loading',
+  Success = 'Success',
+  Error = 'Error',
+}
