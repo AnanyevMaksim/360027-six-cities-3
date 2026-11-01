@@ -8,7 +8,12 @@ import {
 import { AuthInfo } from '@/types/auth';
 import { CityName, Offers } from '@/types/offer';
 import { changeCity, changeSort } from './action';
-import { checkAuthAction, fetchOffersAction, loginAction } from './api-actions';
+import {
+  checkAuthAction,
+  fetchOffersAction,
+  loginAction,
+  logoutAction,
+} from './api-actions';
 
 type InitialState = {
   city: CityName;
@@ -56,5 +61,9 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(loginAction.fulfilled, (state, action) => {
       state.authorizationStatus = AuthorizationStatus.Auth;
       state.user = action.payload;
+    })
+    .addCase(logoutAction.fulfilled, (state) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+      state.user = null;
     });
 });

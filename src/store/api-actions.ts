@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute } from '@/const';
-import { saveToken } from '@/services/token';
+import { dropToken, saveToken } from '@/services/token';
 import { AuthData, AuthInfo } from '@/types/auth';
 import { Offers } from '@/types/offer';
 
@@ -31,4 +31,13 @@ export const loginAction = createAsyncThunk<
   const { data } = await api.post<AuthInfo>(APIRoute.Login, authData);
   saveToken(data.token);
   return data;
+});
+
+export const logoutAction = createAsyncThunk<
+  void,
+  undefined,
+  { extra: AxiosInstance }
+>('user/logout', async (_arg, { extra: api }) => {
+  await api.delete(APIRoute.Logout);
+  dropToken();
 });

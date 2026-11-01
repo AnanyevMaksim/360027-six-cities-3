@@ -1,6 +1,9 @@
+import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '@/const';
+import useAppDispatch from '@/hooks/use-app-dispatch';
 import useAppSelector from '@/hooks/use-app-selector';
+import { logoutAction } from '@/store/api-actions';
 import {
   selectAuthorizationStatus,
   selectFavoriteOffers,
@@ -11,6 +14,12 @@ function Nav(): JSX.Element {
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   const user = useAppSelector(selectUser);
   const favoriteOffers = useAppSelector(selectFavoriteOffers);
+  const dispatch = useAppDispatch();
+
+  const handleSignOutClick = (evt: MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
+    dispatch(logoutAction());
+  };
 
   return (
     <nav className="header__nav">
@@ -32,7 +41,11 @@ function Nav(): JSX.Element {
               </Link>
             </li>
             <li className="header__nav-item">
-              <a className="header__nav-link" href="#">
+              <a
+                className="header__nav-link"
+                href="#"
+                onClick={handleSignOutClick}
+              >
                 <span className="header__signout">Sign out</span>
               </a>
             </li>
