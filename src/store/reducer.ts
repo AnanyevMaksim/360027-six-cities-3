@@ -5,6 +5,7 @@ import {
   RequestStatus,
   SortType,
 } from '@/const';
+import { AuthInfo } from '@/types/auth';
 import { CityName, Offers } from '@/types/offer';
 import { changeCity, changeSort } from './action';
 import { checkAuthAction, fetchOffersAction } from './api-actions';
@@ -15,6 +16,7 @@ type InitialState = {
   sortType: SortType;
   offersStatus: RequestStatus;
   authorizationStatus: AuthorizationStatus;
+  user: AuthInfo | null;
 };
 
 const initialState: InitialState = {
@@ -23,6 +25,7 @@ const initialState: InitialState = {
   sortType: SortType.Popular,
   offersStatus: RequestStatus.Idle,
   authorizationStatus: AuthorizationStatus.Unknown,
+  user: null,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -43,8 +46,9 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(fetchOffersAction.rejected, (state) => {
       state.offersStatus = RequestStatus.Error;
     })
-    .addCase(checkAuthAction.fulfilled, (state) => {
+    .addCase(checkAuthAction.fulfilled, (state, action) => {
       state.authorizationStatus = AuthorizationStatus.Auth;
+      state.user = action.payload;
     })
     .addCase(checkAuthAction.rejected, (state) => {
       state.authorizationStatus = AuthorizationStatus.NoAuth;

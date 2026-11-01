@@ -1,6 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute } from '@/const';
+import { AuthInfo } from '@/types/auth';
 import { Offers } from '@/types/offer';
 
 export const fetchOffersAction = createAsyncThunk<
@@ -13,9 +14,10 @@ export const fetchOffersAction = createAsyncThunk<
 });
 
 export const checkAuthAction = createAsyncThunk<
-  void,
+  AuthInfo,
   undefined,
   { extra: AxiosInstance }
 >('user/checkAuth', async (_arg, { extra: api }) => {
-  await api.get(APIRoute.Login);
+  const { data } = await api.get<AuthInfo>(APIRoute.Login);
+  return data;
 });
