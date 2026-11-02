@@ -8,6 +8,8 @@ export enum AppRoute {
 
 export enum APIRoute {
   Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
 }
 
 export enum AuthorizationStatus {
@@ -32,4 +34,11 @@ export enum SortType {
   PriceAsc = 'PriceAsc',
   PriceDesc = 'PriceDesc',
   TopRated = 'TopRated',
+}
+
+export enum RequestStatus {
+  Idle = 'Idle',
+  Loading = 'Loading',
+  Success = 'Success',
+  Error = 'Error',
 }

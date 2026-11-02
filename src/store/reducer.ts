@@ -1,21 +1,38 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { DEFAULT_CITY, SortType } from '@/const';
+import {
+  AuthorizationStatus,
+  DEFAULT_CITY,
+  RequestStatus,
+  SortType,
+} from '@/const';
+import { AuthInfo } from '@/types/auth';
 import { CityName, Offers } from '@/types/offer';
 import { changeCity, changeSort } from './action';
-import { fetchOffersAction } from './api-actions';
+import {
+  checkAuthAction,
+  fetchOffersAction,
+  loginAction,
+  logoutAction,
+} from './api-actions';
 
 type InitialState = {
   city: CityName;
   offers: Offers;
   sortType: SortType;
-  isOffersLoading: boolean;
+  offersStatus: RequestStatus;
+  authorizationStatus: AuthorizationStatus;
+  user: AuthInfo | null;
+  loginStatus: RequestStatus;
 };
 
 const initialState: InitialState = {
   city: DEFAULT_CITY,
   offers: [],
   sortType: SortType.Popular,
-  isOffersLoading: false,
+  offersStatus: RequestStatus.Idle,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  user: null,
+  loginStatus: RequestStatus.Idle,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -27,13 +44,35 @@ export const reducer = createReducer(initialState, (builder) => {
       state.sortType = action.payload;
     })
     .addCase(fetchOffersAction.pending, (state) => {
-      state.isOffersLoading = true;
+      state.offersStatus = RequestStatus.Loading;
     })
     .addCase(fetchOffersAction.fulfilled, (state, action) => {
       state.offers = action.payload;
-      state.isOffersLoading = false;
+      state.offersStatus = RequestStatus.Success;
     })
     .addCase(fetchOffersAction.rejected, (state) => {
-      state.isOffersLoading = false;
+      state.offersStatus = RequestStatus.Error;
+    })
+    .addCase(checkAuthAction.fulfilled, (state, action) => {
+      state.authorizationStatus = AuthorizationStatus.Auth;
+      state.user = action.payload;
+    })
+    .addCase(checkAuthAction.rejected, (state) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+    })
+    .addCase(loginAction.pending, (state) => {
+      state.loginStatus = RequestStatus.Loading;
+    })
+    .addCase(loginAction.fulfilled, (state, action) => {
+      state.authorizationStatus = AuthorizationStatus.Auth;
+      state.user = action.payload;
+      state.loginStatus = RequestStatus.Success;
+    })
+    .addCase(loginAction.rejected, (state) => {
+      state.loginStatus = RequestStatus.Error;
+    })
+    .addCase(logoutAction.fulfilled, (state) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+      state.user = null;
     });
 });
