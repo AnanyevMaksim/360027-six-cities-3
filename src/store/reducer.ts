@@ -22,6 +22,7 @@ type InitialState = {
   offersStatus: RequestStatus;
   authorizationStatus: AuthorizationStatus;
   user: AuthInfo | null;
+  loginStatus: RequestStatus;
 };
 
 const initialState: InitialState = {
@@ -31,6 +32,7 @@ const initialState: InitialState = {
   offersStatus: RequestStatus.Idle,
   authorizationStatus: AuthorizationStatus.Unknown,
   user: null,
+  loginStatus: RequestStatus.Idle,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -58,9 +60,16 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(checkAuthAction.rejected, (state) => {
       state.authorizationStatus = AuthorizationStatus.NoAuth;
     })
+    .addCase(loginAction.pending, (state) => {
+      state.loginStatus = RequestStatus.Loading;
+    })
     .addCase(loginAction.fulfilled, (state, action) => {
       state.authorizationStatus = AuthorizationStatus.Auth;
       state.user = action.payload;
+      state.loginStatus = RequestStatus.Success;
+    })
+    .addCase(loginAction.rejected, (state) => {
+      state.loginStatus = RequestStatus.Error;
     })
     .addCase(logoutAction.fulfilled, (state) => {
       state.authorizationStatus = AuthorizationStatus.NoAuth;

@@ -33,6 +33,8 @@ export const selectAuthorizationStatus = (state: State) =>
 
 export const selectUser = (state: State) => state.user;
 
+export const selectLoginRequestStatus = (state: State) => state.loginStatus;
+
 export const selectOffersRequestStatus = (state: State) => state.offersStatus;
 
 export const selectFavoriteOffers = createSelector([selectOffers], (offers) =>
@@ -54,6 +56,15 @@ export const selectOffersStatus = createSelector(
   (status) => ({
     isLoading:
       status === RequestStatus.Idle || status === RequestStatus.Loading,
+    isSuccess: status === RequestStatus.Success,
+    isError: status === RequestStatus.Error,
+  }),
+);
+
+export const selectLoginStatus = createSelector(
+  [selectLoginRequestStatus],
+  (status) => ({
+    isLoading: status === RequestStatus.Loading,
     isSuccess: status === RequestStatus.Success,
     isError: status === RequestStatus.Error,
   }),

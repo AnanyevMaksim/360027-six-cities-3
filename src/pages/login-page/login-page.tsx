@@ -3,7 +3,10 @@ import { Navigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '@/const';
 import useAppDispatch from '@/hooks/use-app-dispatch';
 import useAppSelector from '@/hooks/use-app-selector';
-import { selectAuthorizationStatus } from '@/store/selectors';
+import {
+  selectAuthorizationStatus,
+  selectLoginStatus,
+} from '@/store/selectors';
 import { loginAction } from '@/store/api-actions';
 import Header from '@/components/header/header';
 
@@ -14,6 +17,7 @@ function LoginPage(): JSX.Element {
   const passwordRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
+  const { isLoading } = useAppSelector(selectLoginStatus);
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
     return <Navigate to={AppRoute.Root} replace />;
@@ -73,8 +77,9 @@ function LoginPage(): JSX.Element {
               <button
                 className="login__submit form__submit button"
                 type="submit"
+                disabled={isLoading}
               >
-                Sign in
+                {isLoading ? 'Sign in...' : 'Sign in'}
               </button>
             </form>
           </section>
