@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Icon, layerGroup, Marker } from 'leaflet';
 import clsx from 'clsx';
-import { City, Offers } from '@/types/offer';
+import { City, Offer } from '@/types/offer';
 import useMap from '@/hooks/use-map';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from './const';
 import 'leaflet/dist/leaflet.css';
@@ -9,7 +9,7 @@ import 'leaflet/dist/leaflet.css';
 type MapProps = {
   className: string;
   city: City;
-  offers: Offers;
+  offers: Pick<Offer, 'id' | 'location'>[];
   activeOfferId: string | null;
 };
 

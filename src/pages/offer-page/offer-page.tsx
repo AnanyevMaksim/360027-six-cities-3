@@ -1,30 +1,57 @@
-import { Navigate, useParams } from 'react-router-dom';
-import { AppRoute } from '@/const';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import useAppDispatch from '@/hooks/use-app-dispatch';
 import useAppSelector from '@/hooks/use-app-selector';
-import { selectOffers } from '@/store/offers-data/selectors';
+import {
+  fetchNearbyOffersAction,
+  fetchOfferAction,
+  fetchReviewsAction,
+} from '@/store/api-actions';
+import {
+  selectOffer,
+  selectOfferStatus,
+  selectShownNearbyOffers,
+} from '@/store/offer-data/selectors';
+import {
+  selectReviews,
+  selectShownReviews,
+} from '@/store/reviews-data/selectors';
 import Header from '@/components/header/header';
 import CardBadge from '@/components/card-badge/card-badge';
 import ReviewsList from '@/components/reviews-list/reviews-list';
 import ReviewForm from '@/components/review-form/review-form';
 import Map from '@/components/map/map';
 import PlacesList from '@/components/places-list/places-list';
+import Loader from '@/components/loader/loader';
+import FullPageError from '@/components/full-page-error/full-page-error';
 import { getRatingWidth } from '@/utils';
-
-const MAX_NEAR_OFFERS_COUNT = 3;
 
 function OfferPage(): JSX.Element {
   const { id } = useParams();
-  const offers = useAppSelector(selectOffers);
-  const offer = offers.find((item) => item.id === id);
+  const dispatch = useAppDispatch();
+  const offer = useAppSelector(selectOffer);
+  const { isLoading, isError } = useAppSelector(selectOfferStatus);
+  const nearOffers = useAppSelector(selectShownNearbyOffers);
+  const reviews = useAppSelector(selectReviews);
+  const shownReviews = useAppSelector(selectShownReviews);
 
-  if (!offer) {
-    return <Navigate to={AppRoute.NotFound} replace />;
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchOfferAction(id));
+      dispatch(fetchNearbyOffersAction(id));
+      dispatch(fetchReviewsAction(id));
+    }
+  }, [dispatch, id]);
+
+  if (isError) {
+    return <FullPageError />;
+  }
+
+  if (isLoading || !offer || offer.id !== id) {
+    return <Loader />;
   }
 
   const { title, isPremium, price, rating, city } = offer;
-  const nearOffers = offers
-    .filter((item) => item.id !== offer.id && item.city.name === city.name)
-    .slice(0, MAX_NEAR_OFFERS_COUNT);
 
   return (
     <div className="page">
@@ -158,7 +185,10 @@ function OfferPage(): JSX.Element {
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <ReviewsList reviews={[]} />
+                <ReviewsList
+                  reviews={shownReviews}
+                  reviewsCount={reviews.length}
+                />
                 <ReviewForm />
               </section>
             </div>

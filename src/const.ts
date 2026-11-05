@@ -10,6 +10,8 @@ export enum APIRoute {
   Offers = '/offers',
   Login = '/login',
   Logout = '/logout',
+  Nearby = '/nearby',
+  Comments = '/comments',
 }
 
 export enum AuthorizationStatus {
@@ -47,4 +49,6 @@ export enum NameSpace {
   App = 'app',
   Data = 'data',
   User = 'user',
+  Offer = 'offer',
+  Reviews = 'reviews',
 }
