@@ -170,7 +170,7 @@ function OfferPage(): JSX.Element {
                   reviews={shownReviews}
                   reviewsCount={reviews.length}
                 />
-                <ReviewForm />
+                <ReviewForm offerId={offer.id} />
               </section>
             </div>
           </div>

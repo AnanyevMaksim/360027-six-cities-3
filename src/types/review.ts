@@ -13,3 +13,9 @@ export type Review = {
 };
 
 export type Reviews = Review[];
+
+export type ReviewData = {
+  offerId: string;
+  comment: string;
+  rating: number;
+};

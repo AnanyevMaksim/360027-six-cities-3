@@ -4,7 +4,7 @@ import { APIRoute } from '@/const';
 import { dropToken, saveToken } from '@/services/token';
 import { AuthData, AuthInfo } from '@/types/auth';
 import { FullOffer, Offers } from '@/types/offer';
-import { Reviews } from '@/types/review';
+import { Review, ReviewData, Reviews } from '@/types/review';
 
 export const fetchOffersAction = createAsyncThunk<
   Offers,
@@ -79,3 +79,18 @@ export const fetchReviewsAction = createAsyncThunk<
   const { data } = await api.get<Reviews>(`${APIRoute.Comments}/${offerId}`);
   return data;
 });
+
+export const postReviewAction = createAsyncThunk<
+  Review,
+  ReviewData,
+  { extra: AxiosInstance }
+>(
+  'reviews/postReview',
+  async ({ offerId, comment, rating }, { extra: api }) => {
+    const { data } = await api.post<Review>(`${APIRoute.Comments}/${offerId}`, {
+      comment,
+      rating,
+    });
+    return data;
+  },
+);

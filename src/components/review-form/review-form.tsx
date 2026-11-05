@@ -1,4 +1,8 @@
-import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
+import { ChangeEvent, FormEvent, Fragment, useEffect, useState } from 'react';
+import useAppDispatch from '@/hooks/use-app-dispatch';
+import useAppSelector from '@/hooks/use-app-selector';
+import { postReviewAction } from '@/store/api-actions';
+import { selectReviewPostStatus } from '@/store/reviews-data/selectors';
 
 const ReviewLength = {
   Min: 50,
@@ -13,9 +17,22 @@ const RATINGS = [
   { value: 1, title: 'terribly' },
 ];
 
-function ReviewForm(): JSX.Element {
+type ReviewFormProps = {
+  offerId: string;
+};
+
+function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
+  const dispatch = useAppDispatch();
+  const { isLoading, isSuccess } = useAppSelector(selectReviewPostStatus);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setRating(0);
+      setReview('');
+    }
+  }, [isSuccess]);
 
   const isSubmitDisabled =
     rating === 0 ||
@@ -32,6 +49,7 @@ function ReviewForm(): JSX.Element {
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    dispatch(postReviewAction({ offerId, comment: review, rating }));
   };
 
   return (
@@ -54,6 +72,7 @@ function ReviewForm(): JSX.Element {
               id={`${value}-stars`}
               type="radio"
               checked={rating === value}
+              disabled={isLoading}
               onChange={handleRatingChange}
             />
             <label
@@ -74,6 +93,7 @@ function ReviewForm(): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={review}
+        disabled={isLoading}
         onChange={handleReviewChange}
       />
       <div className="reviews__button-wrapper">
@@ -86,9 +106,9 @@ function ReviewForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={isSubmitDisabled}
+          disabled={isSubmitDisabled || isLoading}
         >
-          Submit
+          {isLoading ? 'Submitting...' : 'Submit'}
         </button>
       </div>
     </form>
