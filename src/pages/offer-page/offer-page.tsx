@@ -1,7 +1,7 @@
 import { Navigate, useParams } from 'react-router-dom';
 import { AppRoute } from '@/const';
 import useAppSelector from '@/hooks/use-app-selector';
-import { selectOffers } from '@/store/selectors';
+import { selectOffers } from '@/store/offers-data/selectors';
 import Header from '@/components/header/header';
 import CardBadge from '@/components/card-badge/card-badge';
 import ReviewsList from '@/components/reviews-list/reviews-list';

@@ -42,3 +42,9 @@ export enum RequestStatus {
   Success = 'Success',
   Error = 'Error',
 }
+
+export enum NameSpace {
+  App = 'app',
+  Data = 'data',
+  User = 'user',
+}
