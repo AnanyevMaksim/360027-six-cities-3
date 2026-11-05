@@ -1,3 +1,5 @@
+import { OfferType } from '@/types/offer';
+
 export enum AppRoute {
   Root = '/',
   Login = '/login',
@@ -52,3 +54,10 @@ export enum NameSpace {
   Offer = 'offer',
   Reviews = 'reviews',
 }
+
+export const OfferTypeToLabel: Record<OfferType, string> = {
+  apartment: 'Apartment',
+  room: 'Room',
+  house: 'House',
+  hotel: 'Hotel',
+};

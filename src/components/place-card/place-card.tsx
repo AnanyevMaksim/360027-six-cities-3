@@ -1,17 +1,10 @@
 import clsx from 'clsx';
 import { generatePath, Link } from 'react-router-dom';
-import { AppRoute } from '@/const';
-import { Offer, OfferType } from '@/types/offer';
+import { AppRoute, OfferTypeToLabel } from '@/const';
+import { Offer } from '@/types/offer';
 import CardBadge from '@/components/card-badge/card-badge';
 import BookmarkButton from '@/components/bookmark-button/bookmark-button';
 import { getRatingWidth } from '@/utils';
-
-const OfferTypeToLabel: Record<OfferType, string> = {
-  apartment: 'Apartment',
-  room: 'Room',
-  house: 'House',
-  hotel: 'Hotel',
-};
 
 type PlaceCardType = 'cities' | 'favorites' | 'near-places';
 

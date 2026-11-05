@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import clsx from 'clsx';
+import { OfferTypeToLabel } from '@/const';
 import useAppDispatch from '@/hooks/use-app-dispatch';
 import useAppSelector from '@/hooks/use-app-selector';
 import {
@@ -26,6 +28,12 @@ import Loader from '@/components/loader/loader';
 import FullPageError from '@/components/full-page-error/full-page-error';
 import { getRatingWidth } from '@/utils';
 
+const MAX_IMAGES_COUNT = 6;
+
+function getPluralizedLabel(count: number, word: string): string {
+  return `${count} ${count === 1 ? word : `${word}s`}`;
+}
+
 function OfferPage(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
@@ -51,7 +59,20 @@ function OfferPage(): JSX.Element {
     return <Loader />;
   }
 
-  const { title, isPremium, price, rating, city } = offer;
+  const {
+    title,
+    type,
+    isPremium,
+    price,
+    rating,
+    city,
+    images,
+    bedrooms,
+    maxAdults,
+    goods,
+    host,
+    description,
+  } = offer;
 
   return (
     <div className="page">
@@ -61,48 +82,11 @@ function OfferPage(): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/room.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/apartment-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/apartment-02.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/apartment-03.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/studio-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/apartment-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
+              {images.slice(0, MAX_IMAGES_COUNT).map((image) => (
+                <div className="offer__image-wrapper" key={image}>
+                  <img className="offer__image" src={image} alt={title} />
+                </div>
+              ))}
             </div>
           </div>
           <div className="offer__container container">
@@ -128,13 +112,13 @@ function OfferPage(): JSX.Element {
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  Apartment
+                  {OfferTypeToLabel[type]}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  3 Bedrooms
+                  {getPluralizedLabel(bedrooms, 'Bedroom')}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max 4 adults
+                  Max {getPluralizedLabel(maxAdults, 'adult')}
                 </li>
               </ul>
               <div className="offer__price">
@@ -144,44 +128,37 @@ function OfferPage(): JSX.Element {
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  <li className="offer__inside-item">Wi-Fi</li>
-                  <li className="offer__inside-item">Washing machine</li>
-                  <li className="offer__inside-item">Towels</li>
-                  <li className="offer__inside-item">Heating</li>
-                  <li className="offer__inside-item">Coffee machine</li>
-                  <li className="offer__inside-item">Baby seat</li>
-                  <li className="offer__inside-item">Kitchen</li>
-                  <li className="offer__inside-item">Dishwasher</li>
-                  <li className="offer__inside-item">Cabel TV</li>
-                  <li className="offer__inside-item">Fridge</li>
+                  {goods.map((good) => (
+                    <li className="offer__inside-item" key={good}>
+                      {good}
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
-                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                  <div
+                    className={clsx(
+                      'offer__avatar-wrapper user__avatar-wrapper',
+                      host.isPro && 'offer__avatar-wrapper--pro',
+                    )}
+                  >
                     <img
                       className="offer__avatar user__avatar"
-                      src="img/avatar-angelina.jpg"
+                      src={host.avatarUrl}
                       width="74"
                       height="74"
                       alt="Host avatar"
                     />
                   </div>
-                  <span className="offer__user-name">Angelina</span>
-                  <span className="offer__user-status">Pro</span>
+                  <span className="offer__user-name">{host.name}</span>
+                  {host.isPro && (
+                    <span className="offer__user-status">Pro</span>
+                  )}
                 </div>
                 <div className="offer__description">
-                  <p className="offer__text">
-                    A quiet cozy and picturesque that hides behind a a river by
-                    the unique lightness of Amsterdam. The building is green and
-                    from 18th century.
-                  </p>
-                  <p className="offer__text">
-                    An independent House, strategically located between Rembrand
-                    Square and National Opera, but where the bustle of the city
-                    comes to rest in this alley flowery and colorful.
-                  </p>
+                  <p className="offer__text">{description}</p>
                 </div>
               </div>
               <section className="offer__reviews reviews">
