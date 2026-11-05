@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { memo, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { SortType } from '@/const';
 import useAppDispatch from '@/hooks/use-app-dispatch';
@@ -64,4 +64,6 @@ function Sorting(): JSX.Element {
   );
 }
 
-export default Sorting;
+const MemoizedSorting = memo(Sorting);
+
+export default MemoizedSorting;

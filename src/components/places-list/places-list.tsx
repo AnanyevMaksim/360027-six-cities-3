@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import clsx from 'clsx';
 import { Offers } from '@/types/offer';
 import PlaceCard from '@/components/place-card/place-card';
@@ -43,4 +44,6 @@ function PlacesList({
   );
 }
 
-export default PlacesList;
+const MemoizedPlacesList = memo(PlacesList);
+
+export default MemoizedPlacesList;

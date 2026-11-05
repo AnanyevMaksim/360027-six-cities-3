@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import clsx from 'clsx';
 import { CityName } from '@/types/offer';
 import useAppDispatch from '@/hooks/use-app-dispatch';
@@ -24,9 +24,12 @@ function MainPage(): JSX.Element {
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
   const isEmpty = offers.length === 0;
 
-  const handleCityChange = (newCity: CityName) => {
-    dispatch(changeCity(newCity));
-  };
+  const handleCityChange = useCallback(
+    (newCity: CityName) => {
+      dispatch(changeCity(newCity));
+    },
+    [dispatch],
+  );
 
   return (
     <div className="page page--gray page--main">
