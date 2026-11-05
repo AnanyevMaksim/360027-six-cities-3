@@ -19,6 +19,7 @@ export const selectOfferStatus = createSelector(
       status === RequestStatus.Idle || status === RequestStatus.Loading,
     isSuccess: status === RequestStatus.Success,
     isError: status === RequestStatus.Error,
+    isNotFound: status === RequestStatus.NotFound,
   }),
 );
 

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import clsx from 'clsx';
-import { OfferTypeToLabel } from '@/const';
+import { AppRoute, OfferTypeToLabel } from '@/const';
 import useAppDispatch from '@/hooks/use-app-dispatch';
 import useAppSelector from '@/hooks/use-app-selector';
 import {
@@ -38,7 +38,7 @@ function OfferPage(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const offer = useAppSelector(selectOffer);
-  const { isLoading, isError } = useAppSelector(selectOfferStatus);
+  const { isLoading, isError, isNotFound } = useAppSelector(selectOfferStatus);
   const nearOffers = useAppSelector(selectShownNearbyOffers);
   const reviews = useAppSelector(selectReviews);
   const shownReviews = useAppSelector(selectShownReviews);
@@ -50,6 +50,10 @@ function OfferPage(): JSX.Element {
       dispatch(fetchReviewsAction(id));
     }
   }, [dispatch, id]);
+
+  if (isNotFound) {
+    return <Navigate to={AppRoute.NotFound} replace />;
+  }
 
   if (isError) {
     return <FullPageError />;

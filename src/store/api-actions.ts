@@ -1,4 +1,4 @@
-import { AxiosInstance } from 'axios';
+import { AxiosInstance, isAxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute } from '@/const';
 import { dropToken, saveToken } from '@/services/token';
@@ -46,10 +46,18 @@ export const logoutAction = createAsyncThunk<
 export const fetchOfferAction = createAsyncThunk<
   FullOffer,
   string,
-  { extra: AxiosInstance }
->('offer/fetchOffer', async (offerId, { extra: api }) => {
-  const { data } = await api.get<FullOffer>(`${APIRoute.Offers}/${offerId}`);
-  return data;
+  { extra: AxiosInstance; rejectValue: number }
+>('offer/fetchOffer', async (offerId, { extra: api, rejectWithValue }) => {
+  try {
+    const { data } = await api.get<FullOffer>(`${APIRoute.Offers}/${offerId}`);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      return rejectWithValue(error.response.status);
+    }
+
+    throw error;
+  }
 });
 
 export const fetchNearbyOffersAction = createAsyncThunk<

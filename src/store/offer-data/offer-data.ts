@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { StatusCodes } from 'http-status-codes';
 import { NameSpace, RequestStatus } from '@/const';
 import { FullOffer, Offers } from '@/types/offer';
 import { fetchNearbyOffersAction, fetchOfferAction } from '@/store/api-actions';
@@ -29,8 +30,11 @@ export const offerData = createSlice({
         state.offer = action.payload;
         state.offerStatus = RequestStatus.Success;
       })
-      .addCase(fetchOfferAction.rejected, (state) => {
-        state.offerStatus = RequestStatus.Error;
+      .addCase(fetchOfferAction.rejected, (state, action) => {
+        state.offerStatus =
+          action.payload === StatusCodes.NOT_FOUND
+            ? RequestStatus.NotFound
+            : RequestStatus.Error;
       })
       .addCase(fetchNearbyOffersAction.pending, (state) => {
         state.nearbyOffers = [];

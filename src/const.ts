@@ -45,6 +45,7 @@ export enum RequestStatus {
   Loading = 'Loading',
   Success = 'Success',
   Error = 'Error',
+  NotFound = 'NotFound',
 }
 
 export enum NameSpace {
