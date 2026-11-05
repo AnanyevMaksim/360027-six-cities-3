@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import clsx from 'clsx';
-import { AppRoute, OfferTypeToLabel } from '@/const';
+import { AppRoute, AuthorizationStatus, OfferTypeToLabel } from '@/const';
 import useAppDispatch from '@/hooks/use-app-dispatch';
 import useAppSelector from '@/hooks/use-app-selector';
 import {
@@ -18,6 +18,7 @@ import {
   selectReviews,
   selectShownReviews,
 } from '@/store/reviews-data/selectors';
+import { selectAuthorizationStatus } from '@/store/user-process/selectors';
 import Header from '@/components/header/header';
 import CardBadge from '@/components/card-badge/card-badge';
 import ReviewsList from '@/components/reviews-list/reviews-list';
@@ -42,6 +43,7 @@ function OfferPage(): JSX.Element {
   const nearOffers = useAppSelector(selectShownNearbyOffers);
   const reviews = useAppSelector(selectReviews);
   const shownReviews = useAppSelector(selectShownReviews);
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
 
   useEffect(() => {
     if (id) {
@@ -170,7 +172,9 @@ function OfferPage(): JSX.Element {
                   reviews={shownReviews}
                   reviewsCount={reviews.length}
                 />
-                <ReviewForm offerId={offer.id} />
+                {authorizationStatus === AuthorizationStatus.Auth && (
+                  <ReviewForm offerId={offer.id} />
+                )}
               </section>
             </div>
           </div>
