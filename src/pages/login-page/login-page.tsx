@@ -6,7 +6,7 @@ import useAppSelector from '@/hooks/use-app-selector';
 import {
   selectAuthorizationStatus,
   selectLoginStatus,
-} from '@/store/selectors';
+} from '@/store/user-process/selectors';
 import { loginAction } from '@/store/api-actions';
 import Header from '@/components/header/header';
 

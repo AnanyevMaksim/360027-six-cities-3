@@ -1,9 +1,10 @@
-import { AxiosInstance } from 'axios';
+import { AxiosInstance, isAxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute } from '@/const';
 import { dropToken, saveToken } from '@/services/token';
 import { AuthData, AuthInfo } from '@/types/auth';
-import { Offers } from '@/types/offer';
+import { FullOffer, Offers } from '@/types/offer';
+import { Review, ReviewData, Reviews } from '@/types/review';
 
 export const fetchOffersAction = createAsyncThunk<
   Offers,
@@ -41,3 +42,55 @@ export const logoutAction = createAsyncThunk<
   await api.delete(APIRoute.Logout);
   dropToken();
 });
+
+export const fetchOfferAction = createAsyncThunk<
+  FullOffer,
+  string,
+  { extra: AxiosInstance; rejectValue: number }
+>('offer/fetchOffer', async (offerId, { extra: api, rejectWithValue }) => {
+  try {
+    const { data } = await api.get<FullOffer>(`${APIRoute.Offers}/${offerId}`);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      return rejectWithValue(error.response.status);
+    }
+
+    throw error;
+  }
+});
+
+export const fetchNearbyOffersAction = createAsyncThunk<
+  Offers,
+  string,
+  { extra: AxiosInstance }
+>('offer/fetchNearbyOffers', async (offerId, { extra: api }) => {
+  const { data } = await api.get<Offers>(
+    `${APIRoute.Offers}/${offerId}${APIRoute.Nearby}`,
+  );
+  return data;
+});
+
+export const fetchReviewsAction = createAsyncThunk<
+  Reviews,
+  string,
+  { extra: AxiosInstance }
+>('reviews/fetchReviews', async (offerId, { extra: api }) => {
+  const { data } = await api.get<Reviews>(`${APIRoute.Comments}/${offerId}`);
+  return data;
+});
+
+export const postReviewAction = createAsyncThunk<
+  Review,
+  ReviewData,
+  { extra: AxiosInstance }
+>(
+  'reviews/postReview',
+  async ({ offerId, comment, rating }, { extra: api }) => {
+    const { data } = await api.post<Review>(`${APIRoute.Comments}/${offerId}`, {
+      comment,
+      rating,
+    });
+    return data;
+  },
+);

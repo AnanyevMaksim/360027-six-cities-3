@@ -4,11 +4,11 @@ import { AppRoute, AuthorizationStatus } from '@/const';
 import useAppDispatch from '@/hooks/use-app-dispatch';
 import useAppSelector from '@/hooks/use-app-selector';
 import { logoutAction } from '@/store/api-actions';
+import { selectFavoriteOffers } from '@/store/offers-data/selectors';
 import {
   selectAuthorizationStatus,
-  selectFavoriteOffers,
   selectUser,
-} from '@/store/selectors';
+} from '@/store/user-process/selectors';
 
 function Nav(): JSX.Element {
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);

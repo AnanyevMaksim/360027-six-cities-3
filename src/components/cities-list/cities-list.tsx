@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { memo, MouseEvent } from 'react';
 import clsx from 'clsx';
 import { CITIES } from '@/const';
 import { CityName } from '@/types/offer';
@@ -46,4 +46,6 @@ function CitiesList({
   );
 }
 
-export default CitiesList;
+const MemoizedCitiesList = memo(CitiesList);
+
+export default MemoizedCitiesList;

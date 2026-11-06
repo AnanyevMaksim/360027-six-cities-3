@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import Logo from '@/components/logo/logo';
 import Nav from '@/components/nav/nav';
 
@@ -24,4 +25,6 @@ function Header({
   );
 }
 
-export default Header;
+const MemoizedHeader = memo(Header);
+
+export default MemoizedHeader;

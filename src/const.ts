@@ -1,3 +1,5 @@
+import { OfferType } from '@/types/offer';
+
 export enum AppRoute {
   Root = '/',
   Login = '/login',
@@ -10,6 +12,8 @@ export enum APIRoute {
   Offers = '/offers',
   Login = '/login',
   Logout = '/logout',
+  Nearby = '/nearby',
+  Comments = '/comments',
 }
 
 export enum AuthorizationStatus {
@@ -41,4 +45,20 @@ export enum RequestStatus {
   Loading = 'Loading',
   Success = 'Success',
   Error = 'Error',
+  NotFound = 'NotFound',
 }
+
+export enum NameSpace {
+  App = 'app',
+  Data = 'data',
+  User = 'user',
+  Offer = 'offer',
+  Reviews = 'reviews',
+}
+
+export const OfferTypeToLabel: Record<OfferType, string> = {
+  apartment: 'Apartment',
+  room: 'Room',
+  house: 'House',
+  hotel: 'Hotel',
+};

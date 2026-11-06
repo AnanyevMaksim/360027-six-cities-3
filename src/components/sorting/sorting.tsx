@@ -1,11 +1,11 @@
-import { useRef, useState } from 'react';
+import { memo, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { SortType } from '@/const';
 import useAppDispatch from '@/hooks/use-app-dispatch';
 import useAppSelector from '@/hooks/use-app-selector';
 import useOutsideClick from '@/hooks/use-outside-click';
-import { selectSortType } from '@/store/selectors';
-import { changeSort } from '@/store/action';
+import { changeSort } from '@/store/app-process/app-process';
+import { selectSortType } from '@/store/app-process/selectors';
 import { SortTypeDictionary } from './const';
 
 function Sorting(): JSX.Element {
@@ -64,4 +64,6 @@ function Sorting(): JSX.Element {
   );
 }
 
-export default Sorting;
+const MemoizedSorting = memo(Sorting);
+
+export default MemoizedSorting;

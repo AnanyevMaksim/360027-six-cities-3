@@ -3,14 +3,14 @@ import ReviewItem from '@/components/review-item/review-item';
 
 type ReviewsListProps = {
   reviews: Reviews;
+  reviewsCount: number;
 };
 
-function ReviewsList({ reviews }: ReviewsListProps): JSX.Element {
+function ReviewsList({ reviews, reviewsCount }: ReviewsListProps): JSX.Element {
   return (
     <>
       <h2 className="reviews__title">
-        Reviews &middot;{' '}
-        <span className="reviews__amount">{reviews.length}</span>
+        Reviews &middot; <span className="reviews__amount">{reviewsCount}</span>
       </h2>
       <ul className="reviews__list">
         {reviews.map((review) => (

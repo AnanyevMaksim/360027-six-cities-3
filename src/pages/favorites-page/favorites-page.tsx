@@ -1,5 +1,5 @@
 import useAppSelector from '@/hooks/use-app-selector';
-import { selectFavoriteOffers } from '@/store/selectors';
+import { selectFavoriteOffers } from '@/store/offers-data/selectors';
 import PlaceCard from '@/components/place-card/place-card';
 import Logo from '@/components/logo/logo';
 import Header from '@/components/header/header';

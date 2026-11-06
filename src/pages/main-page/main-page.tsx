@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import clsx from 'clsx';
 import { CityName } from '@/types/offer';
 import useAppDispatch from '@/hooks/use-app-dispatch';
 import useAppSelector from '@/hooks/use-app-selector';
+import { changeCity } from '@/store/app-process/app-process';
+import { selectCity } from '@/store/app-process/selectors';
 import {
-  selectCity,
   selectCityOffers,
   selectSortedCityOffers,
-} from '@/store/selectors';
-import { changeCity } from '@/store/action';
+} from '@/store/offers-data/selectors';
 import PlacesList from '@/components/places-list/places-list';
 import Header from '@/components/header/header';
 import CitiesList from '@/components/cities-list/cities-list';
@@ -24,9 +24,12 @@ function MainPage(): JSX.Element {
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
   const isEmpty = offers.length === 0;
 
-  const handleCityChange = (newCity: CityName) => {
-    dispatch(changeCity(newCity));
-  };
+  const handleCityChange = useCallback(
+    (newCity: CityName) => {
+      dispatch(changeCity(newCity));
+    },
+    [dispatch],
+  );
 
   return (
     <div className="page page--gray page--main">

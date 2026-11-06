@@ -1,4 +1,5 @@
 import { CITIES } from '@/const';
+import { User } from './review';
 
 export type OfferType = 'apartment' | 'room' | 'house' | 'hotel';
 
@@ -27,5 +28,14 @@ export type Offer = {
 };
 
 export type Offers = Offer[];
+
+export type FullOffer = Omit<Offer, 'previewImage'> & {
+  description: string;
+  bedrooms: number;
+  goods: string[];
+  host: User;
+  images: string[];
+  maxAdults: number;
+};
 
 export type CityName = (typeof CITIES)[number];
