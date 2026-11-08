@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute } from '@/const';
 import { dropToken, saveToken } from '@/services/token';
 import { AuthData, AuthInfo } from '@/types/auth';
-import { FullOffer, Offers } from '@/types/offer';
+import { FavoriteData, FullOffer, Offers } from '@/types/offer';
 import { Review, ReviewData, Reviews } from '@/types/review';
 
 export const fetchOffersAction = createAsyncThunk<
@@ -91,6 +91,20 @@ export const postReviewAction = createAsyncThunk<
       comment,
       rating,
     });
+    return data;
+  },
+);
+
+export const changeFavoriteStatusAction = createAsyncThunk<
+  FullOffer,
+  FavoriteData,
+  { extra: AxiosInstance }
+>(
+  'favorites/changeFavoriteStatus',
+  async ({ offerId, isFavorite }, { extra: api }) => {
+    const { data } = await api.post<FullOffer>(
+      `${APIRoute.Favorite}/${offerId}/${Number(isFavorite)}`,
+    );
     return data;
   },
 );

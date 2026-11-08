@@ -21,6 +21,7 @@ import {
 import { selectAuthorizationStatus } from '@/store/user-process/selectors';
 import Header from '@/components/header/header';
 import CardBadge from '@/components/card-badge/card-badge';
+import BookmarkButton from '@/components/bookmark-button/bookmark-button';
 import ReviewsList from '@/components/reviews-list/reviews-list';
 import ReviewForm from '@/components/review-form/review-form';
 import Map from '@/components/map/map';
@@ -69,6 +70,7 @@ function OfferPage(): JSX.Element {
     title,
     type,
     isPremium,
+    isFavorite,
     price,
     rating,
     city,
@@ -100,12 +102,11 @@ function OfferPage(): JSX.Element {
               {isPremium && <CardBadge className="offer__mark" />}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{title}</h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <BookmarkButton
+                  type="offer"
+                  offerId={offer.id}
+                  isActive={isFavorite}
+                />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
