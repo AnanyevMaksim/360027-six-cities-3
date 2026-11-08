@@ -3,7 +3,9 @@ import { NameSpace, RequestStatus } from '@/const';
 import { Offers } from '@/types/offer';
 import {
   changeFavoriteStatusAction,
+  fetchFavoritesAction,
   fetchOffersAction,
+  logoutAction,
 } from '@/store/api-actions';
 
 type OffersData = {
@@ -40,6 +42,18 @@ export const offersData = createSlice({
         if (offer) {
           offer.isFavorite = action.payload.isFavorite;
         }
+      })
+      .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
+        const favoriteIds = action.payload.map((offer) => offer.id);
+
+        state.offers.forEach((offer) => {
+          offer.isFavorite = favoriteIds.includes(offer.id);
+        });
+      })
+      .addCase(logoutAction.fulfilled, (state) => {
+        state.offers.forEach((offer) => {
+          offer.isFavorite = false;
+        });
       });
   },
 });

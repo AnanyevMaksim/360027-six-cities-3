@@ -6,6 +6,7 @@ import {
   changeFavoriteStatusAction,
   fetchNearbyOffersAction,
   fetchOfferAction,
+  logoutAction,
 } from '@/store/api-actions';
 
 type OfferData = {
@@ -58,6 +59,15 @@ export const offerData = createSlice({
         if (nearbyOffer) {
           nearbyOffer.isFavorite = isFavorite;
         }
+      })
+      .addCase(logoutAction.fulfilled, (state) => {
+        if (state.offer) {
+          state.offer.isFavorite = false;
+        }
+
+        state.nearbyOffers.forEach((offer) => {
+          offer.isFavorite = false;
+        });
       });
   },
 });

@@ -5,6 +5,7 @@ import { dropToken, saveToken } from '@/services/token';
 import { AuthData, AuthInfo } from '@/types/auth';
 import { FavoriteData, FullOffer, Offers } from '@/types/offer';
 import { Review, ReviewData, Reviews } from '@/types/review';
+import { AppDispatch } from '@/types/state';
 
 export const fetchOffersAction = createAsyncThunk<
   Offers,
@@ -36,10 +37,11 @@ export const fetchFavoritesAction = createAsyncThunk<
 export const loginAction = createAsyncThunk<
   AuthInfo,
   AuthData,
-  { extra: AxiosInstance }
->('user/login', async (authData, { extra: api }) => {
+  { dispatch: AppDispatch; extra: AxiosInstance }
+>('user/login', async (authData, { dispatch, extra: api }) => {
   const { data } = await api.post<AuthInfo>(APIRoute.Login, authData);
   saveToken(data.token);
+  dispatch(fetchFavoritesAction());
   return data;
 });
 
