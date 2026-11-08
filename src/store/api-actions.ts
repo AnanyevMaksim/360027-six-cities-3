@@ -24,6 +24,15 @@ export const checkAuthAction = createAsyncThunk<
   return data;
 });
 
+export const fetchFavoritesAction = createAsyncThunk<
+  Offers,
+  undefined,
+  { extra: AxiosInstance }
+>('favorites/fetchFavorites', async (_arg, { extra: api }) => {
+  const { data } = await api.get<Offers>(APIRoute.Favorite);
+  return data;
+});
+
 export const loginAction = createAsyncThunk<
   AuthInfo,
   AuthData,

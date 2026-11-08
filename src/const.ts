@@ -55,6 +55,7 @@ export enum NameSpace {
   User = 'user',
   Offer = 'offer',
   Reviews = 'reviews',
+  Favorites = 'favorites',
 }
 
 export const OfferTypeToLabel: Record<OfferType, string> = {
