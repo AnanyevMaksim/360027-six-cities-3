@@ -2,12 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { StatusCodes } from 'http-status-codes';
 import { NameSpace, RequestStatus } from '@/const';
 import { FullOffer, Offers } from '@/types/offer';
-import {
-  changeFavoriteStatusAction,
-  fetchNearbyOffersAction,
-  fetchOfferAction,
-  logoutAction,
-} from '@/store/api-actions';
+import { fetchNearbyOffersAction, fetchOfferAction } from '@/store/api-actions';
 
 type OfferData = {
   offer: FullOffer | null;
@@ -46,28 +41,6 @@ export const offerData = createSlice({
       })
       .addCase(fetchNearbyOffersAction.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;
-      })
-      .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
-        const { id, isFavorite } = action.payload;
-
-        if (state.offer?.id === id) {
-          state.offer.isFavorite = isFavorite;
-        }
-
-        const nearbyOffer = state.nearbyOffers.find((item) => item.id === id);
-
-        if (nearbyOffer) {
-          nearbyOffer.isFavorite = isFavorite;
-        }
-      })
-      .addCase(logoutAction.fulfilled, (state) => {
-        if (state.offer) {
-          state.offer.isFavorite = false;
-        }
-
-        state.nearbyOffers.forEach((offer) => {
-          offer.isFavorite = false;
-        });
       });
   },
 });

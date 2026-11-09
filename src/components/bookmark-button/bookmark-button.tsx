@@ -5,6 +5,7 @@ import useAppDispatch from '@/hooks/use-app-dispatch';
 import useAppSelector from '@/hooks/use-app-selector';
 import { changeFavoriteStatusAction } from '@/store/api-actions';
 import { selectAuthorizationStatus } from '@/store/user-process/selectors';
+import { selectFavoriteIdsSet } from '@/store/favorites-data/selectors';
 
 type BookmarkButtonType = 'place-card' | 'offer';
 
@@ -21,17 +22,14 @@ const BookmarkButtonTypeToIconSize: Record<BookmarkButtonType, IconSize> = {
 type BookmarkButtonProps = {
   type: BookmarkButtonType;
   offerId: string;
-  isActive: boolean;
 };
 
-function BookmarkButton({
-  type,
-  offerId,
-  isActive,
-}: BookmarkButtonProps): JSX.Element {
+function BookmarkButton({ type, offerId }: BookmarkButtonProps): JSX.Element {
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const favoriteIdsSet = useAppSelector(selectFavoriteIdsSet);
+  const isActive = favoriteIdsSet.has(offerId);
   const iconSize = BookmarkButtonTypeToIconSize[type];
 
   const handleButtonClick = () => {

@@ -23,6 +23,5 @@ export const selectReviewPostStatus = createSelector(
   (status) => ({
     isLoading: status === RequestStatus.Loading,
     isSuccess: status === RequestStatus.Success,
-    isError: status === RequestStatus.Error,
   }),
 );

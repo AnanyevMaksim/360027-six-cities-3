@@ -18,7 +18,7 @@ function FavoritesPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const favoritesByCity = useAppSelector(selectFavoritesByCity);
   const { isLoading, isError } = useAppSelector(selectFavoritesStatus);
-  const isEmpty = favoritesByCity.length === 0;
+  const isEmpty = Object.keys(favoritesByCity).length === 0;
 
   useEffect(() => {
     dispatch(fetchFavoritesAction());
@@ -48,7 +48,7 @@ function FavoritesPage(): JSX.Element {
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">
-                {favoritesByCity.map(({ city, offers }) => (
+                {Object.keys(favoritesByCity).map((city) => (
                   <li className="favorites__locations-items" key={city}>
                     <div className="favorites__locations locations locations--current">
                       <div className="locations__item">
@@ -58,7 +58,7 @@ function FavoritesPage(): JSX.Element {
                       </div>
                     </div>
                     <div className="favorites__places">
-                      {offers.map((offer) => (
+                      {favoritesByCity[city].map((offer) => (
                         <PlaceCard
                           key={offer.id}
                           offer={offer}

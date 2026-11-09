@@ -1,12 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, RequestStatus } from '@/const';
 import { Offers } from '@/types/offer';
-import {
-  changeFavoriteStatusAction,
-  fetchFavoritesAction,
-  fetchOffersAction,
-  logoutAction,
-} from '@/store/api-actions';
+import { fetchOffersAction } from '@/store/api-actions';
 
 type OffersData = {
   offers: Offers;
@@ -33,27 +28,6 @@ export const offersData = createSlice({
       })
       .addCase(fetchOffersAction.rejected, (state) => {
         state.offersStatus = RequestStatus.Error;
-      })
-      .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
-        const offer = state.offers.find(
-          (item) => item.id === action.payload.id,
-        );
-
-        if (offer) {
-          offer.isFavorite = action.payload.isFavorite;
-        }
-      })
-      .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
-        const favoriteIds = action.payload.map((offer) => offer.id);
-
-        state.offers.forEach((offer) => {
-          offer.isFavorite = favoriteIds.includes(offer.id);
-        });
-      })
-      .addCase(logoutAction.fulfilled, (state) => {
-        state.offers.forEach((offer) => {
-          offer.isFavorite = false;
-        });
       });
   },
 });

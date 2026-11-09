@@ -16,21 +16,22 @@ export const fetchOffersAction = createAsyncThunk<
   return data;
 });
 
-export const checkAuthAction = createAsyncThunk<
-  AuthInfo,
-  undefined,
-  { extra: AxiosInstance }
->('user/checkAuth', async (_arg, { extra: api }) => {
-  const { data } = await api.get<AuthInfo>(APIRoute.Login);
-  return data;
-});
-
 export const fetchFavoritesAction = createAsyncThunk<
   Offers,
   undefined,
   { extra: AxiosInstance }
 >('favorites/fetchFavorites', async (_arg, { extra: api }) => {
   const { data } = await api.get<Offers>(APIRoute.Favorite);
+  return data;
+});
+
+export const checkAuthAction = createAsyncThunk<
+  AuthInfo,
+  undefined,
+  { dispatch: AppDispatch; extra: AxiosInstance }
+>('user/checkAuth', async (_arg, { dispatch, extra: api }) => {
+  const { data } = await api.get<AuthInfo>(APIRoute.Login);
+  dispatch(fetchFavoritesAction());
   return data;
 });
 

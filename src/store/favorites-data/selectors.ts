@@ -1,9 +1,18 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { CITIES, NameSpace, RequestStatus } from '@/const';
+import { NameSpace, RequestStatus } from '@/const';
 import { State } from '@/types/state';
+import { Offers } from '@/types/offer';
 
 export const selectFavorites = (state: State) =>
   state[NameSpace.Favorites].favorites;
+
+export const selectFavoriteIds = (state: State) =>
+  state[NameSpace.Favorites].favoriteIds;
+
+export const selectFavoriteIdsSet = createSelector(
+  [selectFavoriteIds],
+  (favoriteIds) => new Set(favoriteIds),
+);
 
 export const selectFavoritesRequestStatus = (state: State) =>
   state[NameSpace.Favorites].favoritesStatus;
@@ -20,8 +29,13 @@ export const selectFavoritesStatus = createSelector(
 export const selectFavoritesByCity = createSelector(
   [selectFavorites],
   (favorites) =>
-    CITIES.map((city) => ({
-      city,
-      offers: favorites.filter((offer) => offer.city.name === city),
-    })).filter(({ offers }) => offers.length > 0),
+    favorites.reduce<Record<string, Offers>>((offersByCity, offer) => {
+      if (!offersByCity[offer.city.name]) {
+        offersByCity[offer.city.name] = [];
+      }
+
+      offersByCity[offer.city.name].push(offer);
+
+      return offersByCity;
+    }, {}),
 );
