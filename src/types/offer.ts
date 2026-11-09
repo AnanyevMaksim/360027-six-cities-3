@@ -38,4 +38,9 @@ export type FullOffer = Omit<Offer, 'previewImage'> & {
   maxAdults: number;
 };
 
+export type FavoriteData = {
+  offerId: string;
+  isFavorite: boolean;
+};
+
 export type CityName = (typeof CITIES)[number];

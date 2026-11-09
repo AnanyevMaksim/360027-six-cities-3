@@ -14,7 +14,5 @@ export const selectLoginStatus = createSelector(
   [selectLoginRequestStatus],
   (status) => ({
     isLoading: status === RequestStatus.Loading,
-    isSuccess: status === RequestStatus.Success,
-    isError: status === RequestStatus.Error,
   }),
 );

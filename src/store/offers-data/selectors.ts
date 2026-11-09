@@ -33,13 +33,8 @@ export const selectOffersStatus = createSelector(
   (status) => ({
     isLoading:
       status === RequestStatus.Idle || status === RequestStatus.Loading,
-    isSuccess: status === RequestStatus.Success,
     isError: status === RequestStatus.Error,
   }),
-);
-
-export const selectFavoriteOffers = createSelector([selectOffers], (offers) =>
-  offers.filter((offer) => offer.isFavorite),
 );
 
 export const selectCityOffers = createSelector(

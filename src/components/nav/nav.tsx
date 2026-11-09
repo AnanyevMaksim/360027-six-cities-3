@@ -4,16 +4,16 @@ import { AppRoute, AuthorizationStatus } from '@/const';
 import useAppDispatch from '@/hooks/use-app-dispatch';
 import useAppSelector from '@/hooks/use-app-selector';
 import { logoutAction } from '@/store/api-actions';
-import { selectFavoriteOffers } from '@/store/offers-data/selectors';
 import {
   selectAuthorizationStatus,
   selectUser,
 } from '@/store/user-process/selectors';
+import { selectFavoriteIds } from '@/store/favorites-data/selectors';
 
 function Nav(): JSX.Element {
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   const user = useAppSelector(selectUser);
-  const favoriteOffers = useAppSelector(selectFavoriteOffers);
+  const favoriteIds = useAppSelector(selectFavoriteIds);
   const dispatch = useAppDispatch();
 
   const handleSignOutClick = (evt: MouseEvent<HTMLAnchorElement>) => {
@@ -36,7 +36,7 @@ function Nav(): JSX.Element {
                   {user.email}
                 </span>
                 <span className="header__favorite-count">
-                  {favoriteOffers.length}
+                  {favoriteIds.length}
                 </span>
               </Link>
             </li>

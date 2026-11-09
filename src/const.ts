@@ -14,6 +14,7 @@ export enum APIRoute {
   Logout = '/logout',
   Nearby = '/nearby',
   Comments = '/comments',
+  Favorite = '/favorite',
 }
 
 export enum AuthorizationStatus {
@@ -54,6 +55,7 @@ export enum NameSpace {
   User = 'user',
   Offer = 'offer',
   Reviews = 'reviews',
+  Favorites = 'favorites',
 }
 
 export const OfferTypeToLabel: Record<OfferType, string> = {
