@@ -4,10 +4,8 @@ import useAppSelector from '@/hooks/use-app-selector';
 import { postReviewAction } from '@/store/api-actions';
 import { selectReviewPostStatus } from '@/store/reviews-data/selectors';
 
-const ReviewLength = {
-  Min: 50,
-  Max: 300,
-} as const;
+const MIN_REVIEW_LENGTH = 50;
+const MAX_REVIEW_LENGTH = 300;
 
 const RATINGS = [
   { value: 5, title: 'perfect' },
@@ -36,8 +34,8 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
 
   const isSubmitDisabled =
     rating === 0 ||
-    review.length < ReviewLength.Min ||
-    review.length > ReviewLength.Max;
+    review.length < MIN_REVIEW_LENGTH ||
+    review.length > MAX_REVIEW_LENGTH;
 
   const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setRating(Number(evt.target.value));
@@ -101,7 +99,8 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
           To submit review please make sure to set{' '}
           <span className="reviews__star">rating</span> and describe your stay
           with at least{' '}
-          <b className="reviews__text-amount">{ReviewLength.Min} characters</b>.
+          <b className="reviews__text-amount">{MIN_REVIEW_LENGTH} characters</b>
+          .
         </p>
         <button
           className="reviews__submit form__submit button"
