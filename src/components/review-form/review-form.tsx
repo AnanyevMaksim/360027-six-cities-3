@@ -26,10 +26,16 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
   const { isLoading, isSuccess } = useAppSelector(selectReviewPostStatus);
 
   useEffect(() => {
-    if (isSuccess) {
+    let isMounted = true;
+
+    if (isMounted && isSuccess) {
       setRating(0);
       setReview('');
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [isSuccess]);
 
   const isSubmitDisabled =
