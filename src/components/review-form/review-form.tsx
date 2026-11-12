@@ -6,6 +6,7 @@ import { selectReviewPostStatus } from '@/store/reviews-data/selectors';
 
 const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 300;
+const DEFAULT_RATING = 0;
 
 const RATINGS = [
   { value: 5, title: 'perfect' },
@@ -20,7 +21,7 @@ type ReviewFormProps = {
 };
 
 function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(DEFAULT_RATING);
   const [review, setReview] = useState('');
   const dispatch = useAppDispatch();
   const { isLoading, isSuccess } = useAppSelector(selectReviewPostStatus);
@@ -29,7 +30,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
     let isMounted = true;
 
     if (isMounted && isSuccess) {
-      setRating(0);
+      setRating(DEFAULT_RATING);
       setReview('');
     }
 
@@ -39,7 +40,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
   }, [isSuccess]);
 
   const isSubmitDisabled =
-    rating === 0 ||
+    rating === DEFAULT_RATING ||
     review.length < MIN_REVIEW_LENGTH ||
     review.length > MAX_REVIEW_LENGTH;
 

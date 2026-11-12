@@ -11,10 +11,12 @@ import {
 } from './const';
 import 'leaflet/dist/leaflet.css';
 
+type MapOffer = Pick<Offer, 'id' | 'location'>;
+
 type MapProps = {
   className: string;
   city: City;
-  offers: Pick<Offer, 'id' | 'location'>[];
+  offers: MapOffer[];
   activeOfferId: string | null;
 };
 
